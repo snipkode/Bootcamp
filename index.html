@@ -393,12 +393,54 @@
                 Jangan lewatkan kesempatan untuk menguasai skill yang paling dicari industri saat ini.
                 12 Minggu, Fokus Praktik, Siap Kerja.
             </p>
-            <button class="px-10 py-5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-full text-lg shadow-xl shadow-brand-600/40 transition transform hover:-translate-y-1">
-                Daftar Bootcamp Sekarang
+            <button onclick="openRegistrationForm()" class="px-10 py-5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-full text-lg shadow-xl shadow-brand-600/40 transition transform hover:-translate-y-1">
+                Daftar Sekarang
             </button>
             <p class="mt-4 text-sm text-slate-500">Batch baru dimulai setiap bulan. Kuota terbatas.</p>
         </div>
     </section>
+
+    <!-- Registration Form Modal -->
+    <div id="registrationModal" class="fixed inset-0 bg-black bg-opacity-70 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-slate-800 rounded-2xl max-w-md w-full p-6 border border-slate-700 relative">
+            <button onclick="closeRegistrationForm()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+
+            <h3 class="text-2xl font-bold text-center mb-6 text-white">Form Pendaftaran</h3>
+
+            <form id="registrationForm">
+                <div class="mb-4">
+                    <label for="fullName" class="block text-slate-300 mb-2">Nama Lengkap</label>
+                    <input
+                        type="text"
+                        id="fullName"
+                        class="w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white focus:ring-2 focus:ring-brand-500 focus:outline-none transition"
+                        placeholder="Masukkan nama lengkap Anda"
+                        required
+                    >
+                </div>
+
+                <div class="mb-6">
+                    <label for="email" class="block text-slate-300 mb-2">Email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        class="w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white focus:ring-2 focus:ring-brand-500 focus:outline-none transition"
+                        placeholder="Masukkan email Anda"
+                        required
+                    >
+                </div>
+
+                <button
+                    type="submit"
+                    class="w-full py-3 bg-green-600 hover:bg-green-500 text-white font-bold rounded-lg shadow-lg shadow-green-900/40 transition"
+                >
+                    Kirim ke WhatsApp
+                </button>
+            </form>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-slate-950 py-12 border-t border-slate-900">
@@ -517,6 +559,46 @@
                 }
             }
         }
+        // Function to open the registration form modal
+        function openRegistrationForm() {
+            document.getElementById('registrationModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        }
+
+        // Function to close the registration form modal
+        function closeRegistrationForm() {
+            document.getElementById('registrationModal').classList.add('hidden');
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        }
+
+        // Handle form submission to open WhatsApp
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+
+            // Create the WhatsApp message
+            const message = `Halo! Saya ingin mendaftar bootcamp Fullstack Mobile.\n\nNama: ${fullName}\nEmail: ${email}\n\nMohon info lebih lanjut.`;
+            const phoneNumber = '6282125497764'; // Indonesian format without leading 0
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+            // Open WhatsApp in a new tab
+            window.open(whatsappUrl, '_blank');
+
+            // Close the modal after sending
+            closeRegistrationForm();
+
+            // Reset the form
+            document.getElementById('registrationForm').reset();
+        });
+
+        // Close modal when clicking outside of it
+        document.getElementById('registrationModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeRegistrationForm();
+            }
+        });
     </script>
 </body>
 </html>
