@@ -94,7 +94,31 @@
                         <a href="#ai-consultant" class="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400 font-bold hover:opacity-80 transition px-3 py-2">
                             <i class="fa-solid fa-sparkles mr-1"></i> Tanya AI
                         </a>
-                        <a href="#cta" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-full font-medium transition shadow-lg shadow-brand-500/30">Daftar Sekarang</a>
+                        <!-- Registration button shown only when not logged in or not completed registration -->
+                        <a id="registerButton" href="#cta" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-full font-medium transition shadow-lg shadow-brand-500/30">Daftar Sekarang</a>
+                        <!-- User panel shown only when logged in -->
+                        <div id="userPanel" class="hidden flex items-center space-x-4">
+                            <a href="#" id="dashboardButton" class="hover:text-amber-400 transition px-3 py-2 font-medium hidden">
+                                <i class="fa-solid fa-table-columns mr-1"></i> Dashboard
+                            </a>
+                            <button id="logoutButton" onclick="signOut()" class="hover:text-rose-400 transition px-3 py-2 font-medium hidden flex items-center gap-1">
+                                <i class="fa-solid fa-right-from-bracket mr-1"></i> Logout
+                            </button>
+                            <div class="relative group">
+                                <button id="userMenuButton" class="flex items-center space-x-1 text-slate-300 hover:text-white">
+                                    <div id="userAvatar" class="w-8 h-8 rounded-full bg-brand-600 flex items-center justify-center text-white text-sm font-bold">
+                                        <i class="fa-solid fa-user"></i>
+                                    </div>
+                                    <span id="userNameDisplay" class="text-sm"></span>
+                                    <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                                </button>
+                                <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-slate-800 border border-slate-700 rounded-lg shadow-lg py-2 hidden group-hover:block z-50">
+                                    <a href="#" id="viewProfileLink" class="block px-4 py-2 text-slate-300 hover:bg-slate-700 hover:text-white">Lihat Profil</a>
+                                    <a href="#" id="settingsLink" class="block px-4 py-2 text-slate-300 hover:bg-slate-700 hover:text-white">Pengaturan</a>
+                                    <a href="#" id="logoutLink" class="block px-4 py-2 text-slate-300 hover:bg-red-600 hover:text-white" onclick="signOut()">Keluar</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -405,6 +429,98 @@
         </div>
     </section>
 
+    <!-- Benefits Section -->
+    <section class="py-20 bg-gradient-to-br from-slate-900 to-slate-800 hidden-on-login">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Benefit Yang Akan Anda Dapatkan</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">
+                    Bergabunglah dengan bootcamp kami dan raih karir impian Anda di dunia teknologi
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-gradient-to-br from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-2xl p-6 backdrop-blur-sm">
+                    <h3 class="font-bold text-white mb-4 flex items-center gap-3 text-xl">
+                        <i class="fa-solid fa-gift text-green-400 text-2xl"></i> Apa Saja Benefitnya?
+                    </h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex items-start gap-3">
+                            <i class="fa-solid fa-certificate text-green-400 mt-1 text-lg"></i>
+                            <div>
+                                <h5 class="font-semibold text-white">Sertifikat Kelulusan</h5>
+                                <p class="text-sm text-slate-400">Sertifikat resmi yang dapat ditampilkan di LinkedIn dan CV Anda</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                            <i class="fa-solid fa-briefcase text-blue-400 mt-1 text-lg"></i>
+                            <div>
+                                <h5 class="font-semibold text-white">Rekomendasi Kerja</h5>
+                                <p class="text-sm text-slate-400">Akses ke jaringan perusahaan mitra untuk peluang kerja</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                            <i class="fa-solid fa-file-lines text-purple-400 mt-1 text-lg"></i>
+                            <div>
+                                <h5 class="font-semibold text-white">Bantuan Pembuatan CV</h5>
+                                <p class="text-sm text-slate-400">Template CV profesional dan bimbingan penulisan</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                            <i class="fa-solid fa-laptop-code text-amber-400 mt-1 text-lg"></i>
+                            <div>
+                                <h5 class="font-semibold text-white">Personal Website</h5>
+                                <p class="text-sm text-slate-400">Website portfolio profesional untuk menampilkan proyek Anda</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 pt-6 border-t border-green-500/20">
+                        <a href="https://kodeku.web.app" target="_blank" class="inline-flex items-center justify-center gap-3 text-green-400 hover:text-green-300 font-medium">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            <span>Lihat Portofolio Instruktur</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Instructor Info -->
+                <div class="bg-gradient-to-br from-indigo-900/30 to-purple-900/30 border-2 border-indigo-500/30 rounded-2xl p-6 backdrop-blur-sm">
+                    <h3 class="font-bold text-white mb-6 flex items-center gap-3 text-xl">
+                        <i class="fa-solid fa-chalkboard-user text-amber-400"></i> Instruktur Profesional
+                    </h3>
+
+                    <div class="flex flex-col items-center text-center gap-6">
+                        <div class="bg-gradient-to-br from-indigo-700 to-purple-800 border-2 border-indigo-500 rounded-full w-28 h-28 flex items-center justify-center text-white text-3xl">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div class="w-full">
+                            <h4 class="font-bold text-xl sm:text-2xl text-white mb-2">Alam Santiko Wibowo, S.Kom., S.H.</h4>
+                            <p class="text-lg text-indigo-200 mb-2">IT Senior Fullstack Developer</p>
+                            <p class="text-base text-indigo-300">Great Eastern Life Insurance</p>
+
+                            <div class="mt-6 pt-6 border-t border-indigo-500/30">
+                                <p class="text-sm text-indigo-200 italic mb-4">
+                                    Pengalaman lebih dari 10 tahun di bidang pengembangan perangkat lunak dan keamanan informasi
+                                </p>
+
+                                <div class="flex justify-center">
+                                    <a href="https://www.linkedin.com/in/alam-santiko-wibowo" target="_blank" class="inline-flex items-center gap-2 text-sm text-blue-300 hover:text-blue-200 transition bg-indigo-800/30 px-4 py-2 rounded-lg">
+                                        <i class="fa-brands fa-linkedin"></i>
+                                        <span>Lihat Profil LinkedIn</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Registration Form Modal -->
     <div id="registrationModal" class="fixed inset-0 bg-black bg-opacity-70 hidden z-50 flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white rounded-2xl max-w-2xl w-full mx-4 my-8 border border-brand-500 relative shadow-2xl">
@@ -419,82 +535,6 @@
                 <p class="text-slate-600 text-sm">Bootcamp Fullstack Mobile Development</p>
             </div>
 
-            <!-- Benefits Section -->
-            <div class="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-xl p-5 mb-6">
-                <h4 class="font-bold text-green-800 mb-3 flex items-center justify-center gap-2 text-center">
-                    <i class="fa-solid fa-gift text-green-600"></i> Benefit Yang Akan Anda Dapatkan
-                </h4>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="flex items-start gap-2">
-                        <i class="fa-solid fa-certificate text-green-600 mt-1"></i>
-                        <div>
-                            <h5 class="font-semibold text-green-700">Sertifikat Kelulusan</h5>
-                            <p class="text-xs text-slate-600">Sertifikat resmi yang dapat ditampilkan di LinkedIn dan CV Anda</p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start gap-2">
-                        <i class="fa-solid fa-briefcase text-blue-600 mt-1"></i>
-                        <div>
-                            <h5 class="font-semibold text-blue-700">Rekomendasi Kerja</h5>
-                            <p class="text-xs text-slate-600">Akses ke jaringan perusahaan mitra untuk peluang kerja</p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start gap-2">
-                        <i class="fa-solid fa-file-lines text-purple-600 mt-1"></i>
-                        <div>
-                            <h5 class="font-semibold text-purple-700">Bantuan Pembuatan CV</h5>
-                            <p class="text-xs text-slate-600">Template CV profesional dan bimbingan penulisan</p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start gap-2">
-                        <i class="fa-solid fa-laptop-code text-orange-600 mt-1"></i>
-                        <div>
-                            <h5 class="font-semibold text-orange-700">Personal Website</h5>
-                            <p class="text-xs text-slate-600">Website portfolio profesional untuk menampilkan proyek Anda</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-4 pt-4 border-t border-green-200">
-                    <a href="https://kodeku.web.app" target="_blank" class="inline-flex items-center justify-center gap-2 text-green-700 hover:text-green-900 font-medium text-sm">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                        Lihat Portofolio Instruktur
-                    </a>
-                </div>
-            </div>
-
-            <!-- Instructor Info -->
-            <div class="bg-gradient-to-br from-indigo-900 to-purple-900 border-2 border-indigo-700 rounded-2xl p-5 mb-6 shadow-lg">
-                <h4 class="font-bold text-white mb-4 flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-chalkboard-user text-yellow-400"></i> Instruktur Profesional
-                </h4>
-
-                <div class="flex flex-col items-center text-center gap-4">
-                    <div class="bg-gradient-to-br from-indigo-700 to-purple-800 border-2 border-indigo-500 rounded-xl w-20 h-20 flex items-center justify-center text-white text-2xl">
-                        <i class="fa-solid fa-user"></i>
-                    </div>
-                    <div class="w-full">
-                        <h5 class="font-bold text-lg sm:text-xl text-white mb-1">Alam Santiko Wibowo, S.Kom., S.H.</h5>
-                        <p class="text-base sm:text-lg text-indigo-200 mb-1">IT Senior Fullstack Developer</p>
-                        <p class="text-sm sm:text-base text-indigo-300">Great Eastern Life Insurance</p>
-
-                        <div class="mt-3 pt-3 border-t border-indigo-700">
-                            <p class="text-xs sm:text-sm text-indigo-200 italic">Pengalaman lebih dari 10 tahun di bidang pengembangan perangkat lunak dan keamanan informasi</p>
-
-                            <div class="mt-2 flex justify-center">
-                                <a href="https://www.linkedin.com/in/alam-santiko-wibowo" target="_blank" class="inline-flex items-center gap-1 text-xs text-blue-300 hover:text-blue-200 transition">
-                                    <i class="fa-brands fa-linkedin"></i>
-                                    <span>Lihat Profil LinkedIn</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <!-- Payment Info Box with Emotional Pricing -->
             <div class="bg-gradient-to-r from-red-50 to-yellow-50 border border-red-200 rounded-xl p-5 mb-6 text-center relative overflow-hidden">
@@ -558,51 +598,183 @@
                 <div id="user-info" class="hidden"></div>
             </div>
 
-            <form id="registrationForm">
-                <div class="mb-4">
-                    <label for="fullName" class="block text-slate-700 mb-2 font-medium">Nama Lengkap</label>
-                    <input
-                        type="text"
-                        id="fullName"
-                        class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3 text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none transition"
-                        placeholder="Masukkan nama lengkap Anda"
-                        required
-                    >
-                </div>
+            <!-- Profile Completion Form -->
+            <div id="profileCompletion" class="profile-step">
+                <h3 class="text-xl font-bold text-center mb-6 text-brand-600">Lengkapi Profil Anda</h3>
 
-                <div class="mb-4">
-                    <label for="email" class="block text-slate-700 mb-2 font-medium">Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3 text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none transition"
-                        placeholder="Masukkan email Anda"
-                        required
+                <form id="profileCompletionForm">
+                    <div class="mb-4">
+                        <label for="fullName" class="block text-slate-700 mb-2 font-medium">Nama Lengkap</label>
+                        <input
+                            type="text"
+                            id="fullName"
+                            class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3 text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none transition"
+                            placeholder="Masukkan nama lengkap Anda"
+                            required
+                        >
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="email" class="block text-slate-700 mb-2 font-medium">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3 text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none transition"
+                            placeholder="Masukkan email Anda"
+                            required
+                        >
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="phone" class="block text-slate-700 mb-2 font-medium">Nomor WhatsApp</label>
+                        <input
+                            type="tel"
+                            id="phone"
+                            class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3 text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none transition"
+                            placeholder="Masukkan nomor WhatsApp Anda"
+                            required
+                        >
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="address" class="block text-slate-700 mb-2 font-medium">Alamat Lengkap</label>
+                        <textarea
+                            id="address"
+                            rows="3"
+                            class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3 text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none transition resize-none"
+                            placeholder="Masukkan alamat lengkap Anda"
+                            required
+                        ></textarea>
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-lg shadow-lg shadow-brand-500/30 transition"
                     >
+                        Simpan Profil dan Lanjutkan <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
+
+                    <p class="text-center text-xs text-slate-500 mt-3">
+                        Data Anda akan kami jaga kerahasiaannya
+                    </p>
+                </form>
+            </div>
+
+            <!-- DP Payment Section -->
+            <div id="dpPaymentSection" class="profile-step hidden">
+                <h3 class="text-xl font-bold text-center mb-6 text-emerald-600">Pembayaran DP (20%)</h3>
+
+                <div class="mb-6 bg-slate-100 p-4 rounded-lg">
+                    <h4 class="font-bold text-slate-800 mb-2">Rincian Pembayaran</h4>
+                    <div class="flex justify-between mb-1">
+                        <span class="text-slate-600">Total Biaya Program:</span>
+                        <span class="font-bold">Rp 5.000.000</span>
+                    </div>
+                    <div class="flex justify-between mb-1">
+                        <span class="text-slate-600">Down Payment (20%):</span>
+                        <span class="font-bold">Rp 1.000.000</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-slate-600">Cicilan (4x):</span>
+                        <span class="font-bold">Rp 1.000.000/bulan</span>
+                    </div>
                 </div>
 
                 <div class="mb-6">
-                    <label for="phone" class="block text-slate-700 mb-2 font-medium">Nomor WhatsApp</label>
-                    <input
-                        type="tel"
-                        id="phone"
-                        class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3 text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none transition"
-                        placeholder="Masukkan nomor WhatsApp Anda"
-                        required
+                    <h4 class="font-bold text-slate-800 mb-3">Metode Pembayaran DP</h4>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button type="button" class="payment-method-btn py-3 bg-slate-200 hover:bg-slate-300 text-slate-800 font-medium rounded-lg transition active:bg-slate-400" data-method="bank_transfer">
+                            <i class="fa-solid fa-building-columns mr-2"></i>Transfer Bank
+                        </button>
+                        <button type="button" class="payment-method-btn py-3 bg-slate-200 hover:bg-slate-300 text-slate-800 font-medium rounded-lg transition active:bg-slate-400" data-method="e_wallet">
+                            <i class="fa-solid fa-wallet mr-2"></i>E-Wallet
+                        </button>
+                        <button type="button" class="payment-method-btn py-3 bg-slate-200 hover:bg-slate-300 text-slate-800 font-medium rounded-lg transition active:bg-slate-400" data-method="virtual_account">
+                            <i class="fa-solid fa-hashtag mr-2"></i>Virtual Account
+                        </button>
+                    </div>
+                    <input type="hidden" id="selectedPaymentMethod" value="">
+                </div>
+
+                <div class="mb-6">
+                    <h4 class="font-bold text-slate-800 mb-3">Upload Bukti Transfer DP</h4>
+                    <div class="border-2 border-dashed border-slate-300 rounded-lg p-8 text-center cursor-pointer hover:bg-slate-50 transition" onclick="document.getElementById('proofUpload').click()">
+                        <i class="fa-solid fa-cloud-arrow-up text-slate-400 text-4xl mb-3"></i>
+                        <p class="text-slate-600">Klik untuk upload bukti transfer DP</p>
+                        <p class="text-sm text-slate-500 mt-1">Format: JPG, PNG, PDF (Max 5MB)</p>
+                        <input type="file" id="proofUpload" class="hidden" accept="image/*,.pdf">
+                    </div>
+                    <div id="uploadedProofPreview" class="mt-3 hidden">
+                        <div class="flex items-center justify-between bg-slate-100 p-3 rounded-lg">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-file-image text-blue-500 mr-2"></i>
+                                <span id="fileName" class="text-slate-700"></span>
+                            </div>
+                            <button type="button" onclick="removeProof()" class="text-red-500 hover:text-red-700">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex gap-3">
+                    <button
+                        type="button"
+                        onclick="goToProfileStep()"
+                        class="flex-1 py-3 bg-slate-500 hover:bg-slate-600 text-white font-bold rounded-lg transition"
                     >
+                        <i class="fa-solid fa-arrow-left mr-2"></i> Kembali
+                    </button>
+                    <button
+                        type="button"
+                        onclick="submitDPayment()"
+                        class="flex-1 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg shadow-lg shadow-emerald-500/30 transition"
+                    >
+                        Kirim Bukti Pembayaran <i class="fa-solid fa-paper-plane ml-2"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Submission Confirmation -->
+            <div id="submissionConfirmation" class="profile-step hidden">
+                <h3 class="text-xl font-bold text-center mb-6 text-amber-600">Menunggu Verifikasi</h3>
+
+                <div class="text-center mb-6">
+                    <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-hourglass-half text-amber-500 text-3xl"></i>
+                    </div>
+                    <p class="text-slate-700 mb-2">Bukti pembayaran DP telah dikirim!</p>
+                    <p class="text-slate-600 text-sm">Tim kami akan segera memverifikasi pembayaran Anda.</p>
+                </div>
+
+                <div class="mb-6 bg-amber-50 border border-amber-200 rounded-lg p-4">
+                    <h4 class="font-bold text-amber-800 mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-exclamation-triangle"></i> Proses Selanjutnya
+                    </h4>
+                    <ul class="text-amber-700 text-sm space-y-1">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-circle text-[0.5rem] mt-1.5"></i>
+                            <span>Instruktur akan memverifikasi bukti pembayaran DP Anda</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-circle text-[0.5rem] mt-1.5"></i>
+                            <span>Setelah DP disetujui, Anda dapat mengakses materi pembelajaran</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-circle text-[0.5rem] mt-1.5"></i>
+                            <span>Pastikan WhatsApp Anda aktif untuk komunikasi lebih lanjut</span>
+                        </li>
+                    </ul>
                 </div>
 
                 <button
-                    type="submit"
-                    class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-lg shadow-lg shadow-brand-500/30 transition"
+                    type="button"
+                    onclick="finishProfileSetup()"
+                    class="w-full py-3 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-lg shadow-lg shadow-amber-500/30 transition"
                 >
-                    <i class="fa-brands fa-whatsapp mr-2"></i> Kirim ke WhatsApp
+                    Tutup dan Tunggu Verifikasi <i class="fa-solid fa-check ml-2"></i>
                 </button>
-
-                <p class="text-center text-xs text-slate-500 mt-3">
-                    Data Anda akan kami jaga kerahasiaannya
-                </p>
-            </form>
+            </div>
             </div> <!-- Closing div for scrollable container -->
         </div>
     </div>
@@ -689,7 +861,7 @@
                     </div>
 
                     <!-- Progress Section -->
-                    <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 mb-8">
+                    <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 mb-8 progress-section">
                         <h2 class="text-xl font-bold text-white mb-4">Progress Kamu</h2>
                         <div class="space-y-4">
                             <div>
@@ -722,6 +894,35 @@
                         </div>
                     </div>
 
+                    <!-- Upcoming Sessions Section -->
+                    <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 mb-8" id="upcomingSessionsSection">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-xl font-bold text-white">Jadwal Sesi Mendatang</h2>
+                            <button class="text-sm text-amber-400 hover:text-amber-300 flex items-center gap-1">
+                                <i class="fa-solid fa-history mr-1"></i> Riwayat Sesi
+                            </button>
+                        </div>
+                        <div class="space-y-4" id="upcomingSessionsList">
+                            <!-- Upcoming sessions will be loaded here -->
+                            <div class="text-center py-4 text-slate-500">
+                                <i class="fa-solid fa-spinner fa-spin text-2xl mb-2"></i>
+                                <p>Memuat jadwal sesi...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment History Section -->
+                    <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 mb-8" id="paymentHistorySection">
+                        <h2 class="text-xl font-bold text-white mb-4">Riwayat Pembayaran</h2>
+                        <div class="space-y-4" id="paymentHistoryList">
+                            <!-- Payment history will be loaded here -->
+                            <div class="text-center py-4 text-slate-500">
+                                <i class="fa-solid fa-spinner fa-spin text-2xl mb-2"></i>
+                                <p>Memuat riwayat pembayaran...</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Resources Section -->
                     <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
                         <h2 class="text-xl font-bold text-white mb-4">Resource Belajar</h2>
@@ -750,61 +951,61 @@
     </div>
 
     <!-- Instructor Dashboard -->
-    <div id="instructorDashboard" class="hidden fixed inset-0 bg-slate-900 z-50 overflow-y-auto">
+    <div id="instructorDashboard" class="hidden fixed inset-0 bg-gradient-to-br from-slate-900 to-slate-800 z-50 overflow-y-auto">
         <div class="container mx-auto px-4 py-8">
             <div class="flex justify-between items-center mb-8">
-                <h1 class="text-3xl font-bold text-white">Dashboard <span class="text-purple-500">Instruktur</span></h1>
-                <button onclick="signOut()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
-                    Logout
+                <h1 class="text-3xl font-bold text-white">Dashboard <span class="text-amber-400">Instruktur</span></h1>
+                <button onclick="signOut()" class="px-4 py-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 transition flex items-center gap-2">
+                    <i class="fa-solid fa-sign-out-alt"></i> Logout
                 </button>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-8">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
                 <!-- Stats Cards -->
-                <div class="bg-gradient-to-br from-indigo-900 to-purple-900 rounded-xl p-6 border border-indigo-700">
+                <div class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-5 border border-slate-700 shadow-xl">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-indigo-300 text-sm">Total Siswa</p>
-                            <p id="totalStudents" class="text-3xl font-bold text-white">0</p>
+                            <p class="text-slate-400 text-sm font-medium">Total Siswa</p>
+                            <p id="totalStudents" class="text-3xl font-bold text-amber-400">0</p>
                         </div>
-                        <div class="bg-indigo-700/30 p-3 rounded-lg">
-                            <i class="fa-solid fa-users text-indigo-300 text-2xl"></i>
+                        <div class="bg-amber-500/10 p-3 rounded-lg">
+                            <i class="fa-solid fa-users text-amber-400 text-2xl"></i>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-gradient-to-br from-green-900 to-teal-900 rounded-xl p-6 border border-green-700">
+                <div class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-5 border border-slate-700 shadow-xl">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-green-300 text-sm">Siswa Aktif</p>
-                            <p id="activeStudents" class="text-3xl font-bold text-white">0</p>
+                            <p class="text-slate-400 text-sm font-medium">Siswa Aktif</p>
+                            <p id="activeStudents" class="text-3xl font-bold text-emerald-400">0</p>
                         </div>
-                        <div class="bg-green-700/30 p-3 rounded-lg">
-                            <i class="fa-solid fa-user-check text-green-300 text-2xl"></i>
+                        <div class="bg-emerald-500/10 p-3 rounded-lg">
+                            <i class="fa-solid fa-user-check text-emerald-400 text-2xl"></i>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-gradient-to-br from-blue-900 to-cyan-900 rounded-xl p-6 border border-blue-700">
+                <div class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-5 border border-slate-700 shadow-xl">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-blue-300 text-sm">Sesi Live</p>
-                            <p id="liveSessions" class="text-3xl font-bold text-white">0</p>
+                            <p class="text-slate-400 text-sm font-medium">Sesi Live</p>
+                            <p id="liveSessions" class="text-3xl font-bold text-blue-400">0</p>
                         </div>
-                        <div class="bg-blue-700/30 p-3 rounded-lg">
-                            <i class="fa-solid fa-video text-blue-300 text-2xl"></i>
+                        <div class="bg-blue-500/10 p-3 rounded-lg">
+                            <i class="fa-solid fa-video text-blue-400 text-2xl"></i>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-gradient-to-br from-yellow-900 to-orange-900 rounded-xl p-6 border border-yellow-700">
+                <div class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-5 border border-slate-700 shadow-xl">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-yellow-300 text-sm">Kompleksi</p>
-                            <p id="completionRate" class="text-3xl font-bold text-white">0%</p>
+                            <p class="text-slate-400 text-sm font-medium">Kompleksi</p>
+                            <p id="completionRate" class="text-3xl font-bold text-purple-400">0%</p>
                         </div>
-                        <div class="bg-yellow-700/30 p-3 rounded-lg">
-                            <i class="fa-solid fa-chart-line text-yellow-300 text-2xl"></i>
+                        <div class="bg-purple-500/10 p-3 rounded-lg">
+                            <i class="fa-solid fa-chart-line text-purple-400 text-2xl"></i>
                         </div>
                     </div>
                 </div>
@@ -813,15 +1014,17 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <!-- Students List -->
                 <div class="lg:col-span-2">
-                    <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                    <div class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 border border-slate-700 shadow-xl">
                         <div class="flex justify-between items-center mb-6">
-                            <h2 class="text-xl font-bold text-white">Daftar Siswa</h2>
+                            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                                <i class="fa-solid fa-graduation-cap text-amber-400"></i> Daftar Siswa
+                            </h2>
                             <div class="relative">
                                 <input
                                     type="text"
                                     id="studentSearch"
                                     placeholder="Cari siswa..."
-                                    class="bg-slate-700 text-white rounded-lg px-4 py-2 pl-10 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                                    class="bg-slate-700 text-white rounded-lg px-4 py-2 pl-10 focus:outline-none focus:ring-2 focus:ring-amber-500"
                                 >
                                 <i class="fa-solid fa-search absolute left-3 top-3 text-slate-400"></i>
                             </div>
@@ -849,44 +1052,71 @@
 
                 <!-- Instructor Profile & Actions -->
                 <div>
-                    <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 mb-8">
+                    <div class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 border border-slate-700 shadow-xl mb-8">
                         <div class="flex flex-col items-center text-center mb-6">
-                            <div class="bg-gradient-to-br from-indigo-700 to-purple-800 border-2 border-indigo-500 rounded-xl w-24 h-24 flex items-center justify-center text-white text-3xl mb-4">
+                            <div class="bg-gradient-to-br from-amber-700 to-orange-800 border-2 border-amber-500 rounded-full w-28 h-28 flex items-center justify-center text-white text-4xl mb-4">
                                 <i class="fa-solid fa-chalkboard-user"></i>
                             </div>
                             <h2 id="instructorName" class="text-xl font-bold text-white"></h2>
-                            <p id="instructorEmail" class="text-slate-400"></p>
+                            <p id="instructorEmail" class="text-slate-400 mt-1 flex items-center gap-1">
+                                <i class="fa-solid fa-envelope text-slate-500 text-sm mr-1"></i>
+                                <span id="instructorEmailText"></span>
+                            </p>
                         </div>
 
                         <div class="space-y-4">
-                            <button class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-lg shadow-lg transition">
-                                <i class="fa-solid fa-plus mr-2"></i> Tambah Materi
+                            <button class="w-full py-3 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-lg shadow-lg transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-plus"></i> Tambah Materi
                             </button>
-                            <button onclick="openScheduleSessionModal()" class="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-lg shadow-lg transition">
-                                <i class="fa-solid fa-calendar-check mr-2"></i> Jadwalkan Live Session
+                            <button onclick="openScheduleSessionModal()" class="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-lg shadow-lg transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-calendar-check"></i> Jadwalkan Live Session
                             </button>
-                            <button class="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg shadow-lg transition">
-                                <i class="fa-solid fa-message mr-2"></i> Kirim Pengumuman
+                            <button class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg shadow-lg transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-message"></i> Kirim Pengumuman
                             </button>
                         </div>
                     </div>
 
-                    <!-- Scheduled Sessions -->
-                    <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 mb-8">
+                    <!-- Session Management -->
+                    <div class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 border border-slate-700 shadow-xl mb-8">
                         <div class="flex justify-between items-center mb-4">
-                            <h2 class="text-xl font-bold text-white">Jadwal Sesi Mendatang</h2>
-                            <button onclick="openScheduleSessionModal()" class="px-3 py-1 bg-purple-600 hover:bg-purple-700 text-white text-sm rounded-lg transition">
-                                <i class="fa-solid fa-plus mr-1"></i> Tambah
+                            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                                <i class="fa-solid fa-calendar-alt text-amber-400"></i> Manajemen Sesi
+                            </h2>
+                            <button onclick="openScheduleSessionModal()" class="px-3 py-1 bg-amber-600 hover:bg-amber-700 text-white text-sm rounded-lg transition flex items-center gap-1">
+                                <i class="fa-solid fa-plus"></i> Tambah
                             </button>
                         </div>
-                        <div class="space-y-4" id="scheduledSessions">
-                            <!-- Scheduled sessions will be populated here dynamically -->
+
+                        <!-- Tab Navigation -->
+                        <div class="flex border-b border-slate-600 mb-4">
+                            <button class="tab-button px-4 py-2 font-medium text-slate-400 hover:text-white border-b-2 border-transparent hover:border-amber-500 transition" data-tab="upcoming">
+                                Sesi Mendatang
+                            </button>
+                            <button class="tab-button px-4 py-2 font-medium text-slate-400 hover:text-white border-b-2 border-transparent hover:border-amber-500 transition" data-tab="past">
+                                Sesi Terlaksana
+                            </button>
+                        </div>
+
+                        <!-- Tab Content -->
+                        <div id="upcomingSessionsTab" class="tab-content">
+                            <div class="space-y-4" id="scheduledSessions">
+                                <!-- Scheduled sessions will be populated here dynamically -->
+                            </div>
+                        </div>
+
+                        <div id="pastSessionsTab" class="tab-content hidden">
+                            <div class="space-y-4" id="pastSessions">
+                                <!-- Past sessions will be populated here dynamically -->
+                            </div>
                         </div>
                     </div>
 
                     <!-- Recent Activity -->
-                    <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
-                        <h2 class="text-xl font-bold text-white mb-4">Aktivitas Terbaru</h2>
+                    <div class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 border border-slate-700 shadow-xl">
+                        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-bolt text-purple-400"></i> Aktivitas Terbaru
+                        </h2>
                         <div class="space-y-4" id="recentActivity">
                             <!-- Activities will be populated here dynamically -->
                         </div>
@@ -1223,32 +1453,23 @@
             document.body.style.overflow = 'auto'; // Re-enable scrolling
         }
 
-        // Handle form submission to open WhatsApp
-        document.getElementById('registrationForm').addEventListener('submit', async function(e) {
+        // Handle form submission for non-logged-in users (original WhatsApp flow)
+        document.getElementById('profileCompletionForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
             const fullName = document.getElementById('fullName').value;
             const email = document.getElementById('email').value;
             const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
 
-            // Validate required fields after Google login
-            if (!fullName || !phone) {
-                alert('Mohon lengkapi Nama Lengkap dan Nomor WhatsApp Anda.');
-                return;
-            }
-
-            // Save user data to Firebase Realtime Database
-            try {
-                await saveUserDataToFirebase(fullName, email, phone);
-                console.log('User data saved to Firebase successfully');
-            } catch (error) {
-                console.error('Error saving user data to Firebase:', error);
-                alert('Terjadi kesalahan saat menyimpan data. Silakan coba lagi.');
+            // Validate required fields
+            if (!fullName || !email || !phone || !address) {
+                alert('Mohon lengkapi semua informasi profil terlebih dahulu.');
                 return;
             }
 
             // Create the WhatsApp message
-            const message = `Halo! Saya ingin mendaftar bootcamp Fullstack Mobile.\n\nNama: ${fullName}\nEmail: ${email}\nWhatsApp: ${phone}\n\nMohon info lebih lanjut.`;
+            const message = `Halo! Saya ingin mendaftar bootcamp Fullstack Mobile.\n\nNama: ${fullName}\nEmail: ${email}\nWhatsApp: ${phone}\nAlamat: ${address}\n\nMohon info lebih lanjut.`;
             const phoneNumber = phone.replace(/^0/, '62'); // Convert Indonesian format (08xx) to international (628xx)
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
@@ -1258,8 +1479,22 @@
             // Close the modal after sending
             closeRegistrationForm();
 
-            // Reset the form
-            document.getElementById('registrationForm').reset();
+            // Reset the form to profile completion step
+            document.getElementById('dpPaymentSection').classList.add('hidden');
+            document.getElementById('submissionConfirmation').classList.add('hidden');
+            document.getElementById('profileCompletion').classList.remove('hidden');
+            document.getElementById('profileCompletionForm').reset();
+
+            // Reset payment selection
+            document.querySelectorAll('.payment-method-btn').forEach(btn => {
+                btn.classList.remove('bg-emerald-500', 'text-white');
+                btn.classList.add('bg-slate-200');
+            });
+            document.getElementById('selectedPaymentMethod').value = '';
+
+            // Reset proof upload
+            document.getElementById('proofUpload').value = '';
+            document.getElementById('uploadedProofPreview').classList.add('hidden');
         });
 
         // Function to populate form with Google account data when user signs in
@@ -1272,8 +1507,33 @@
             }
         }
 
+        // Function to handle form submission for logged-in users
+        async function submitLoggedInUserForm() {
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+
+            // Validate required fields
+            if (!fullName || !email || !phone) {
+                alert('Mohon lengkapi semua informasi pribadi terlebih dahulu.');
+                return;
+            }
+
+            // Save user data to Firebase Realtime Database
+            try {
+                await saveUserDataToFirebase(fullName, email, phone);
+                console.log('User data saved to Firebase successfully');
+
+                // Move to payment step
+                goToStep2();
+            } catch (error) {
+                console.error('Error saving user data to Firebase:', error);
+                alert('Terjadi kesalahan saat menyimpan data. Silakan coba lagi.');
+            }
+        }
+
         // Function to save user data to Firebase Realtime Database
-        async function saveUserDataToFirebase(fullName, email, phone) {
+        async function saveUserDataToFirebase(fullName, email, phone, address) {
             // Get current user
             const user = auth.currentUser;
 
@@ -1287,6 +1547,7 @@
                 fullName: fullName,
                 email: email,
                 phone: phone,
+                address: address || '', // Address is optional
                 role: 'student', // Default role is student
                 createdAt: firebase.database.ServerValue.TIMESTAMP,
                 lastLoginAt: firebase.database.ServerValue.TIMESTAMP
@@ -1303,6 +1564,7 @@
                 fullName: fullName,
                 email: email,
                 phone: phone,
+                address: address || '',
                 enrolledAt: firebase.database.ServerValue.TIMESTAMP
             });
 
@@ -1547,11 +1809,6 @@
                 const sessionsSnapshot = await database.ref(`instructors/${instructorUid}/sessions`).orderByChild('date').once('value');
                 const sessions = sessionsSnapshot.val() || {};
 
-                const scheduledSessionsContainer = document.getElementById('scheduledSessions');
-
-                // Clear current sessions
-                scheduledSessionsContainer.innerHTML = '';
-
                 // Convert to array and sort by date/time
                 const sessionArray = [];
                 for (const [id, session] of Object.entries(sessions)) {
@@ -1565,83 +1822,52 @@
                     return dateA - dateB;
                 });
 
-                // Limit to upcoming sessions (next 5)
+                // Filter upcoming and past sessions
+                const now = new Date();
                 const upcomingSessions = sessionArray.filter(session => {
                     const sessionDateTime = new Date(`${session.date}T${session.time}`);
-                    return sessionDateTime >= new Date(); // Only show future sessions
-                }).slice(0, 5);
-
-                if (upcomingSessions.length === 0) {
-                    scheduledSessionsContainer.innerHTML = `
-                        <div class="text-center py-8">
-                            <i class="fa-solid fa-calendar-day text-slate-500 text-3xl mb-2"></i>
-                            <p class="text-slate-400">Belum ada sesi yang dijadwalkan</p>
-                            <button onclick="openScheduleSessionModal()" class="mt-3 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm transition">
-                                Jadwalkan Sesi
-                            </button>
-                        </div>
-                    `;
-                    return;
-                }
-
-                // Add each session to the container
-                upcomingSessions.forEach(session => {
-                    const sessionElement = document.createElement('div');
-                    sessionElement.className = 'bg-slate-700 rounded-lg p-4 border border-slate-600';
-
-                    // Format the date and time
-                    const formattedDateTime = formatDate(session.date, session.time);
-                    const formattedDuration = formatDuration(session.duration);
-
-                    // Determine icon and color based on session type
-                    let typeIcon, typeColor, typeText;
-                    if (session.type === 'offline') {
-                        typeIcon = 'fa-building';
-                        typeColor = 'bg-blue-500/10 text-blue-400';
-                        typeText = 'Offline';
-                    } else {
-                        typeIcon = 'fa-video';
-                        typeColor = 'bg-purple-500/10 text-purple-400';
-                        typeText = 'Online';
-                    }
-
-                    sessionElement.innerHTML = `
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <div class="flex items-center gap-2 mb-1">
-                                    <h3 class="font-bold text-white">${session.title}</h3>
-                                    <span class="px-2 py-1 text-xs rounded-full ${typeColor}">
-                                        <i class="fa-solid ${typeIcon}"></i> ${typeText}
-                                    </span>
-                                </div>
-                                <p class="text-slate-400 text-sm mb-2">${formattedDateTime} • ${formattedDuration}</p>
-
-                                ${session.type === 'offline' ?
-                                    `<div class="flex items-center gap-2 text-sm text-slate-300">
-                                        <i class="fa-solid fa-location-dot text-slate-500"></i>
-                                        <span>${session.location || 'Lokasi belum ditentukan'}</span>
-                                    </div>` :
-                                    `<div class="flex items-center gap-2 text-sm text-slate-300">
-                                        <i class="fa-solid fa-link text-slate-500"></i>
-                                        <a href="${session.link || '#'}" target="_blank" class="text-brand-400 hover:underline">${session.platform || 'Platform belum ditentukan'}</a>
-                                    </div>`
-                                }
-
-                                <p class="text-slate-400 text-sm mt-2 line-clamp-2">${session.description || 'Tidak ada deskripsi'}</p>
-                            </div>
-                            <div class="flex gap-2">
-                                <button class="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-600">
-                                    <i class="fa-solid fa-edit"></i>
-                                </button>
-                                <button class="p-2 text-slate-400 hover:text-red-400 rounded-lg hover:bg-slate-600" onclick="deleteSession('${session.id}')">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-                    `;
-
-                    scheduledSessionsContainer.appendChild(sessionElement);
+                    return sessionDateTime >= now; // Only show future sessions
                 });
+
+                const pastSessions = sessionArray.filter(session => {
+                    const sessionDateTime = new Date(`${session.date}T${session.time}`);
+                    return sessionDateTime < now; // Only show past sessions
+                }).reverse(); // Reverse to show most recent first
+
+                // Load upcoming sessions
+                loadUpcomingSessions(upcomingSessions);
+
+                // Load past sessions
+                loadPastSessions(pastSessions);
+
+                // Add event listeners to tab buttons
+                document.querySelectorAll('.tab-button').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const tabName = this.getAttribute('data-tab');
+
+                        // Remove active classes
+                        document.querySelectorAll('.tab-button').forEach(btn => {
+                            btn.classList.remove('text-white', 'border-amber-500');
+                            btn.classList.add('text-slate-400');
+                        });
+
+                        // Add active classes to clicked button
+                        this.classList.remove('text-slate-400');
+                        this.classList.add('text-white', 'border-amber-500');
+
+                        // Hide all tab content
+                        document.querySelectorAll('.tab-content').forEach(content => {
+                            content.classList.add('hidden');
+                        });
+
+                        // Show selected tab content
+                        document.getElementById(`${tabName}SessionsTab`).classList.remove('hidden');
+                    });
+                });
+
+                // Set default to upcoming sessions tab
+                document.querySelector('[data-tab="upcoming"]').classList.add('text-white', 'border-amber-500');
+                document.getElementById('upcomingSessionsTab').classList.remove('hidden');
             } catch (error) {
                 console.error('Error loading scheduled sessions:', error);
                 document.getElementById('scheduledSessions').innerHTML = `
@@ -1650,6 +1876,160 @@
                     </div>
                 `;
             }
+        }
+
+        // Function to load upcoming sessions
+        function loadUpcomingSessions(sessions) {
+            const scheduledSessionsContainer = document.getElementById('scheduledSessions');
+
+            // Clear current sessions
+            scheduledSessionsContainer.innerHTML = '';
+
+            if (sessions.length === 0) {
+                scheduledSessionsContainer.innerHTML = `
+                    <div class="text-center py-8">
+                        <i class="fa-solid fa-calendar-day text-slate-500 text-3xl mb-2"></i>
+                        <p class="text-slate-400">Belum ada sesi yang dijadwalkan</p>
+                        <button onclick="openScheduleSessionModal()" class="mt-3 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm transition">
+                            Jadwalkan Sesi
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            // Add each session to the container
+            sessions.forEach(session => {
+                const sessionElement = document.createElement('div');
+                sessionElement.className = 'bg-slate-700 rounded-lg p-4 border border-slate-600';
+
+                // Format the date and time
+                const formattedDateTime = formatDate(session.date, session.time);
+                const formattedDuration = formatDuration(session.duration);
+
+                // Determine icon and color based on session type
+                let typeIcon, typeColor, typeText;
+                if (session.type === 'offline') {
+                    typeIcon = 'fa-building';
+                    typeColor = 'bg-blue-500/10 text-blue-400';
+                    typeText = 'Offline';
+                } else {
+                    typeIcon = 'fa-video';
+                    typeColor = 'bg-purple-500/10 text-purple-400';
+                    typeText = 'Online';
+                }
+
+                sessionElement.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <h3 class="font-bold text-white">${session.title}</h3>
+                                <span class="px-2 py-1 text-xs rounded-full ${typeColor}">
+                                    <i class="fa-solid ${typeIcon}"></i> ${typeText}
+                                </span>
+                            </div>
+                            <p class="text-slate-400 text-sm mb-2">${formattedDateTime} • ${formattedDuration}</p>
+
+                            ${session.type === 'offline' ?
+                                `<div class="flex items-center gap-2 text-sm text-slate-300">
+                                    <i class="fa-solid fa-location-dot text-slate-500"></i>
+                                    <span>${session.location || 'Lokasi belum ditentukan'}</span>
+                                </div>` :
+                                `<div class="flex items-center gap-2 text-sm text-slate-300">
+                                    <i class="fa-solid fa-link text-slate-500"></i>
+                                    <a href="${session.link || '#'}" target="_blank" class="text-brand-400 hover:underline">${session.platform || 'Platform belum ditentukan'}</a>
+                                </div>`
+                            }
+
+                            <p class="text-slate-400 text-sm mt-2 line-clamp-2">${session.description || 'Tidak ada deskripsi'}</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-600">
+                                <i class="fa-solid fa-edit"></i>
+                            </button>
+                            <button class="p-2 text-slate-400 hover:text-red-400 rounded-lg hover:bg-slate-600" onclick="deleteSession('${session.id}')">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                scheduledSessionsContainer.appendChild(sessionElement);
+            });
+        }
+
+        // Function to load past sessions
+        function loadPastSessions(sessions) {
+            const pastSessionsContainer = document.getElementById('pastSessions');
+
+            // Clear current sessions
+            pastSessionsContainer.innerHTML = '';
+
+            if (sessions.length === 0) {
+                pastSessionsContainer.innerHTML = `
+                    <div class="text-center py-8">
+                        <i class="fa-solid fa-calendar-check text-slate-500 text-3xl mb-2"></i>
+                        <p class="text-slate-400">Belum ada sesi yang terlaksana</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Add each session to the container
+            sessions.forEach(session => {
+                const sessionElement = document.createElement('div');
+                sessionElement.className = 'bg-slate-700 rounded-lg p-4 border border-slate-600';
+
+                // Format the date and time
+                const formattedDateTime = formatDate(session.date, session.time);
+                const formattedDuration = formatDuration(session.duration);
+
+                // Determine icon and color based on session type
+                let typeIcon, typeColor, typeText;
+                if (session.type === 'offline') {
+                    typeIcon = 'fa-building';
+                    typeColor = 'bg-blue-500/10 text-blue-400';
+                    typeText = 'Offline';
+                } else {
+                    typeIcon = 'fa-video';
+                    typeColor = 'bg-purple-500/10 text-purple-400';
+                    typeText = 'Online';
+                }
+
+                sessionElement.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <h3 class="font-bold text-white">${session.title}</h3>
+                                <span class="px-2 py-1 text-xs rounded-full ${typeColor}">
+                                    <i class="fa-solid ${typeIcon}"></i> ${typeText}
+                                </span>
+                            </div>
+                            <p class="text-slate-400 text-sm mb-2">${formattedDateTime} • ${formattedDuration}</p>
+
+                            ${session.type === 'offline' ?
+                                `<div class="flex items-center gap-2 text-sm text-slate-300">
+                                    <i class="fa-solid fa-location-dot text-slate-500"></i>
+                                    <span>${session.location || 'Lokasi belum ditentukan'}</span>
+                                </div>` :
+                                `<div class="flex items-center gap-2 text-sm text-slate-300">
+                                    <i class="fa-solid fa-link text-slate-500"></i>
+                                    <a href="${session.link || '#'}" target="_blank" class="text-brand-400 hover:underline">${session.platform || 'Platform belum ditentukan'}</a>
+                                </div>`
+                            }
+
+                            <p class="text-slate-400 text-sm mt-2 line-clamp-2">${session.description || 'Tidak ada deskripsi'}</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="px-2 py-1 text-xs rounded-full bg-green-900/30 text-green-400">
+                                <i class="fa-solid fa-check"></i> Terlaksana
+                            </span>
+                        </div>
+                    </div>
+                `;
+
+                pastSessionsContainer.appendChild(sessionElement);
+            });
         }
 
         // Function to delete a session
@@ -1801,11 +2181,31 @@
                     throw new Error('User not authenticated');
                 }
 
-                // In a real app, we would update the specific payment item
-                // For demo, we'll just update the student's payment status
+                // Get the student's payment plan
+                const paymentPlan = await getStudentPaymentPlan(studentId);
+
+                if (!paymentPlan) {
+                    throw new Error('Payment plan not found');
+                }
+
+                // Update the specific payment item (down payment in this case)
+                const updatedPlan = { ...paymentPlan };
+                if (status === 'paid') {
+                    updatedPlan.downPayment.status = 'paid';
+                    updatedPlan.downPayment.paidAt = new Date().toISOString();
+                } else {
+                    updatedPlan.downPayment.status = 'rejected';
+                    updatedPlan.downPayment.rejectedAt = new Date().toISOString();
+                }
+
+                // Update the payment plan in the database
+                const paymentPlanRef = database.ref(`payment_plans/${studentId}`);
+                await paymentPlanRef.update(updatedPlan);
+
+                // Update student's overall payment status
                 const studentRef = database.ref(`students/${studentId}`);
                 await studentRef.update({
-                    paymentStatus: status === 'paid' ? 'paid' : status,
+                    paymentStatus: status === 'paid' ? 'paid_dp' : 'pending_dp',
                     lastUpdatedBy: user.uid,
                     lastUpdated: firebase.database.ServerValue.TIMESTAMP
                 });
@@ -1818,7 +2218,7 @@
                     await loadInstructorDashboardData(auth.currentUser.uid);
                 }
 
-                alert(status === 'paid' ? 'Pembayaran berhasil disetujui!' : 'Pembayaran berhasil ditolak!');
+                alert(status === 'paid' ? 'Pembayaran DP berhasil disetujui! Mahasiswa sekarang dapat mengakses fitur pembayaran dan jadwal.' : 'Pembayaran DP ditolak. Mahasiswa perlu mengirim ulang bukti pembayaran.');
             } catch (error) {
                 console.error('Error updating payment status:', error);
                 alert('Terjadi kesalahan saat memperbarui status pembayaran. Silakan coba lagi.');
@@ -1960,6 +2360,136 @@
             }
         });
 
+        // Function to handle profile completion form submission
+        document.getElementById('profileCompletionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+
+            // Validate required fields
+            if (!fullName || !email || !phone || !address) {
+                alert('Mohon lengkapi semua informasi profil terlebih dahulu.');
+                return;
+            }
+
+            // Check if user is logged in
+            const user = auth.currentUser;
+            if (user) {
+                // For logged-in users, save data to Firebase first
+                try {
+                    await saveUserDataToFirebase(fullName, email, phone, address);
+                    console.log('User data saved to Firebase successfully');
+
+                    // Move to DP payment step
+                    goToDPaymentStep();
+                } catch (error) {
+                    console.error('Error saving user data to Firebase:', error);
+                    alert('Terjadi kesalahan saat menyimpan data. Silakan coba lagi.');
+                }
+            } else {
+                alert('Silakan login terlebih dahulu menggunakan akun Google Anda.');
+            }
+        });
+
+        // Function to navigate to DP payment step
+        function goToDPaymentStep() {
+            document.getElementById('profileCompletion').classList.add('hidden');
+            document.getElementById('dpPaymentSection').classList.remove('hidden');
+        }
+
+        // Function to navigate back to profile step
+        function goToProfileStep() {
+            document.getElementById('dpPaymentSection').classList.add('hidden');
+            document.getElementById('profileCompletion').classList.remove('hidden');
+        }
+
+        // Function to submit DP payment
+        function submitDPayment() {
+            const selectedMethod = document.getElementById('selectedPaymentMethod').value;
+            const proofFile = document.getElementById('proofUpload').files[0];
+
+            if (!selectedMethod) {
+                alert('Silakan pilih metode pembayaran terlebih dahulu.');
+                return;
+            }
+
+            if (!proofFile) {
+                alert('Silakan upload bukti transfer DP terlebih dahulu.');
+                return;
+            }
+
+            // In a real application, this would upload the proof and process the payment
+            // For now, we'll just simulate the process and move to confirmation
+            setTimeout(() => {
+                // Hide payment step and show confirmation
+                document.getElementById('dpPaymentSection').classList.add('hidden');
+                document.getElementById('submissionConfirmation').classList.remove('hidden');
+            }, 500);
+        }
+
+        // Function to finish profile setup
+        function finishProfileSetup() {
+            // Close the modal
+            closeRegistrationForm();
+
+            // Reset the form to profile completion step
+            document.getElementById('dpPaymentSection').classList.add('hidden');
+            document.getElementById('submissionConfirmation').classList.add('hidden');
+            document.getElementById('profileCompletion').classList.remove('hidden');
+
+            // Reset form fields
+            document.getElementById('profileCompletionForm').reset();
+
+            // Reset payment selection
+            document.querySelectorAll('.payment-method-btn').forEach(btn => {
+                btn.classList.remove('bg-emerald-500', 'text-white');
+                btn.classList.add('bg-slate-200');
+            });
+            document.getElementById('selectedPaymentMethod').value = '';
+
+            // Reset proof upload
+            document.getElementById('proofUpload').value = '';
+            document.getElementById('uploadedProofPreview').classList.add('hidden');
+        }
+
+        // Function to select payment method
+        document.querySelectorAll('.payment-method-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                document.querySelectorAll('.payment-method-btn').forEach(btn => {
+                    btn.classList.remove('bg-emerald-500', 'text-white');
+                    btn.classList.add('bg-slate-200');
+                });
+
+                // Add active class to clicked button
+                this.classList.add('bg-emerald-500', 'text-white');
+                this.classList.remove('bg-slate-200');
+
+                // Store selected payment method
+                const method = this.getAttribute('data-method');
+                document.getElementById('selectedPaymentMethod').value = method;
+            });
+        });
+
+        // Event listener for file upload
+        document.getElementById('proofUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                document.getElementById('fileName').textContent = file.name;
+                document.getElementById('uploadedProofPreview').classList.remove('hidden');
+            }
+        });
+
+        // Function to remove uploaded proof
+        function removeProof() {
+            document.getElementById('proofUpload').value = '';
+            document.getElementById('uploadedProofPreview').classList.add('hidden');
+        }
+
+
         // Initialize Firebase
         // TODO: Replace with your actual Firebase project configuration
         // Follow these steps to get your config:
@@ -1978,8 +2508,14 @@
   measurementId: "G-D223D9PRFH"
 };
 
-        // Initialize Firebase app
-        firebase.initializeApp(firebaseConfig);
+        // Initialize Firebase app if not already initialized
+        let app;
+        try {
+            app = firebase.initializeApp(firebaseConfig);
+        } catch (error) {
+            // If app is already initialized, get the existing app
+            app = firebase.app();
+        }
 
         // Initialize Firebase auth and database
         const auth = firebase.auth();
@@ -1996,13 +2532,29 @@
          * 1. Go to Firebase Console -> Realtime Database
          * 2. Create a database (start in test mode for development)
          * 3. Set up rules to allow read/write as needed
+         *
+         * Common Issues:
+         * - Make sure your authDomain matches your Firebase project domain
+         * - Ensure "Authorized domains" includes your current domain
+         * - Check that Google sign-in provider is enabled
+         * - Verify your Firebase project is properly configured
          */
 
         // Function to handle Google sign-in
         async function signInWithGoogle() {
-            const provider = new firebase.auth.GoogleAuthProvider();
+            // Check if Firebase is properly initialized
+            if (!firebase.apps.length) {
+                alert('Firebase belum diinisialisasi. Pastikan Anda telah mengatur konfigurasi Firebase dengan benar.');
+                return;
+            }
 
             try {
+                const provider = new firebase.auth.GoogleAuthProvider();
+
+                // Add scopes if needed
+                provider.addScope('profile');
+                provider.addScope('email');
+
                 const result = await auth.signInWithPopup(provider);
                 const user = result.user;
 
@@ -2021,7 +2573,31 @@
                 return user;
             } catch (error) {
                 console.error('Error during Google sign-in:', error);
-                alert('Terjadi kesalahan saat login dengan Google: ' + error.message);
+
+                // Provide more specific error messages
+                let errorMessage = 'Terjadi kesalahan saat login dengan Google.';
+
+                switch(error.code) {
+                    case 'auth/popup-blocked':
+                        errorMessage = 'Popup login diblokir oleh browser. Mohon izinkan popup untuk situs ini.';
+                        break;
+                    case 'auth/cancelled-popup-request':
+                        errorMessage = 'Permintaan login dibatalkan.';
+                        break;
+                    case 'auth/network-request-failed':
+                        errorMessage = 'Kesalahan jaringan. Pastikan Anda terhubung ke internet.';
+                        break;
+                    case 'auth/operation-not-allowed':
+                        errorMessage = 'Login dengan Google belum diaktifkan. Hubungi administrator.';
+                        break;
+                    case 'auth/unauthorized-domain':
+                        errorMessage = 'Domain ini tidak diotorisasi. Tambahkan domain ini ke Firebase Console.';
+                        break;
+                    default:
+                        errorMessage += ' (' + error.message + ')';
+                }
+
+                alert(errorMessage);
             }
         }
 
@@ -2089,9 +2665,26 @@
 
             // Hide student dashboard and show main content
             document.getElementById('studentDashboard').classList.add('hidden');
+            document.getElementById('instructorDashboard').classList.add('hidden');
             document.querySelectorAll('.hidden-on-login').forEach(el => {
                 el.classList.remove('hidden');
             });
+
+            // Show registration button and hide user panel
+            document.getElementById('registerButton').classList.remove('hidden');
+            document.getElementById('userPanel').classList.add('hidden');
+
+            // Hide dashboard and logout buttons
+            const dashboardButton = document.getElementById('dashboardButton');
+            const logoutButton = document.getElementById('logoutButton');
+
+            if (dashboardButton) {
+                dashboardButton.classList.add('hidden');
+            }
+
+            if (logoutButton) {
+                logoutButton.classList.add('hidden');
+            }
         }
 
         // Function to update UI after login
@@ -2127,8 +2720,132 @@
                 email: user.email
             });
 
+            // Update user panel in navbar
+            updateUserPanel(user);
+
+            // Hide registration button and show user panel
+            document.getElementById('registerButton').classList.add('hidden');
+            document.getElementById('userPanel').classList.remove('hidden');
+
             // Check if user has completed registration (has name and phone)
             checkUserRegistrationStatus(user.uid);
+        }
+
+        // Function to update student dashboard with user data
+        async function updateStudentDashboard(userData) {
+            // Update profile information
+            document.getElementById('dashboardFullName').textContent = userData.fullName || userData.displayName || 'N/A';
+            document.getElementById('dashboardEmailText').textContent = userData.email || 'N/A';
+            document.getElementById('dashboardPhoneText').textContent = userData.phone || 'N/A';
+
+            // Format join date
+            if (userData.createdAt) {
+                const date = new Date(userData.createdAt);
+                document.getElementById('joinDateText').textContent = date.toLocaleDateString('id-ID');
+            }
+
+            // Load and display payment information
+            await loadStudentPaymentInfo(userData.uid, userData.fullName, userData.email);
+
+            // Check payment status and show/hide menus accordingly
+            await checkPaymentStatusAndShowMenus(userData.uid);
+
+            // Show student dashboard and hide main content
+            document.getElementById('studentDashboard').classList.remove('hidden');
+            document.getElementById('instructorDashboard').classList.add('hidden');
+            document.querySelectorAll('.hidden-on-login').forEach(el => {
+                el.classList.add('hidden');
+            });
+        }
+
+        // Function to check payment status and show/hide menus
+        async function checkPaymentStatusAndShowMenus(studentId) {
+            try {
+                // Get student's payment status
+                const studentRef = database.ref(`students/${studentId}`);
+                const studentSnapshot = await studentRef.once('value');
+                const studentData = studentSnapshot.val();
+
+                const paymentStatus = studentData?.paymentStatus || 'pending';
+
+                // Show/hide payment and session menus based on payment status
+                if (paymentStatus === 'paid_dp' || paymentStatus === 'paid') {
+                    // Show payment history and session schedule sections
+                    const paymentSection = document.getElementById('paymentHistorySection');
+                    const sessionSection = document.getElementById('upcomingSessionsSection');
+
+                    if (paymentSection) paymentSection.classList.remove('hidden');
+                    if (sessionSection) sessionSection.classList.remove('hidden');
+
+                    // Load payment history and upcoming sessions
+                    await loadPaymentHistory(studentId);
+                    await loadUpcomingSessions(studentId);
+                } else {
+                    // Hide payment history and session schedule sections
+                    const paymentSection = document.getElementById('paymentHistorySection');
+                    const sessionSection = document.getElementById('upcomingSessionsSection');
+
+                    if (paymentSection) paymentSection.classList.add('hidden');
+                    if (sessionSection) sessionSection.classList.add('hidden');
+
+                    // Show message about completing DP payment
+                    const messageContainer = document.createElement('div');
+                    messageContainer.className = 'bg-amber-500/10 border border-amber-500/30 rounded-xl p-6 mb-8 text-center';
+                    messageContainer.id = 'paymentRequiredMessage';
+                    messageContainer.innerHTML = `
+                        <i class="fa-solid fa-exclamation-triangle text-amber-500 text-3xl mb-4"></i>
+                        <h3 class="text-xl font-bold text-amber-400 mb-2">Pembayaran DP Diperlukan</h3>
+                        <p class="text-slate-300 mb-4">Lakukan pembayaran DP (20%) untuk mengakses riwayat pembayaran dan jadwal sesi</p>
+                        <button onclick="openRegistrationForm()" class="px-6 py-3 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-lg shadow-lg transition">
+                            Upload Bukti Pembayaran DP
+                        </button>
+                    `;
+
+                    // Insert the message after the progress section
+                    const progressSection = document.querySelector('.progress-section');
+                    if (progressSection) {
+                        // Remove any existing message
+                        const existingMessage = document.getElementById('paymentRequiredMessage');
+                        if (existingMessage) {
+                            existingMessage.remove();
+                        }
+
+                        progressSection.insertAdjacentElement('afterend', messageContainer);
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking payment status:', error);
+            }
+        }
+
+        // Function to update user panel in navbar
+        function updateUserPanel(user) {
+            // Update user avatar
+            const userAvatar = document.getElementById('userAvatar');
+            if (user.photoURL) {
+                userAvatar.innerHTML = `<img src="${user.photoURL}" alt="Profile" class="w-8 h-8 rounded-full">`;
+            } else {
+                userAvatar.innerHTML = `<i class="fa-solid fa-user"></i>`;
+            }
+
+            // Update user name
+            const userNameDisplay = document.getElementById('userNameDisplay');
+            userNameDisplay.textContent = user.displayName || user.email.split('@')[0]; // Use email prefix if no display name
+
+            // Set dashboard link based on user role
+            const dashboardButton = document.getElementById('dashboardButton');
+            dashboardButton.href = "#"; // Will be handled by JavaScript
+            dashboardButton.onclick = function(e) {
+                e.preventDefault();
+                // This will be handled by the existing dashboard display logic
+                if (auth.currentUser) {
+                    checkUserRegistrationStatus(auth.currentUser.uid);
+                }
+            };
+
+            // Show dashboard and logout buttons
+            document.getElementById('dashboardButton').classList.remove('hidden');
+            document.getElementById('logoutButton').classList.remove('hidden');
         }
 
         // Function to check if user has completed registration
@@ -2140,6 +2857,9 @@
                 if (userData && userData.fullName && userData.phone) {
                     // User has completed registration, show appropriate dashboard based on role
                     showAppropriateDashboard(userData);
+
+                    // Update UI to show dashboard/logout buttons instead of register button
+                    updateRegisteredUserUI();
                 } else {
                     // User needs to complete registration, show registration modal
                     openRegistrationForm();
@@ -2149,28 +2869,30 @@
             }
         }
 
-        // Function to show student dashboard
-        async function showStudentDashboard(userData) {
-            // Update dashboard with user data
-            document.getElementById('dashboardFullName').textContent = userData.fullName || userData.displayName || 'N/A';
-            document.getElementById('dashboardEmail').textContent = userData.email || 'N/A';
-            document.getElementById('dashboardPhone').textContent = userData.phone || 'N/A';
-
-            // Format join date
-            if (userData.createdAt) {
-                const date = new Date(userData.createdAt);
-                document.getElementById('joinDate').textContent = date.toLocaleDateString('id-ID');
+        // Function to update UI for registered users
+        function updateRegisteredUserUI() {
+            // Hide the register button
+            const registerButton = document.getElementById('registerButton');
+            if (registerButton) {
+                registerButton.classList.add('hidden');
             }
 
-            // Load and display payment information
-            await loadStudentPaymentInfo(userData.uid, userData.fullName, userData.email);
+            // Show dashboard and logout buttons if they exist
+            const dashboardButton = document.getElementById('dashboardButton');
+            const logoutButton = document.getElementById('logoutButton');
 
-            // Show student dashboard and hide main content
-            document.getElementById('studentDashboard').classList.remove('hidden');
-            document.getElementById('instructorDashboard').classList.add('hidden');
-            document.querySelectorAll('.hidden-on-login').forEach(el => {
-                el.classList.add('hidden');
-            });
+            if (dashboardButton) {
+                dashboardButton.classList.remove('hidden');
+            }
+
+            if (logoutButton) {
+                logoutButton.classList.remove('hidden');
+            }
+        }
+
+        // Function to show student dashboard
+        async function showStudentDashboard(userData) {
+            await updateStudentDashboard(userData);
         }
 
         // Function to load and display student payment information
@@ -2266,6 +2988,8 @@
                 // Refresh the payment display
                 const updatedPlan = await getStudentPaymentPlan(studentId);
                 updatePaymentDisplay(updatedPlan);
+                // Also reload payment history
+                await loadPaymentHistory(studentId);
                 alert('Pembayaran DP berhasil dicatat!');
             };
 
@@ -2279,18 +3003,212 @@
                     // Refresh the payment display
                     const updatedPlan = await getStudentPaymentPlan(studentId);
                     updatePaymentDisplay(updatedPlan);
+                    // Also reload payment history
+                    await loadPaymentHistory(studentId);
                     alert(`Pembayaran cicilan ${nextPendingInstallment.id} berhasil dicatat!`);
                 } else {
                     alert('Tidak ada cicilan yang perlu dibayar');
                 }
             };
+
+            // Load payment history after updating display
+            loadPaymentHistory(studentId);
+        }
+
+        // Function to load upcoming sessions for a student
+        async function loadUpcomingSessions(studentId) {
+            try {
+                // Get all sessions from Firebase
+                const sessionsRef = database.ref('sessions');
+                const sessionsSnapshot = await sessionsRef.once('value');
+                const sessions = sessionsSnapshot.val() || {};
+
+                const sessionsList = document.getElementById('upcomingSessionsList');
+
+                // Convert to array and filter for upcoming sessions
+                const sessionArray = [];
+                for (const [id, session] of Object.entries(sessions)) {
+                    sessionArray.push({ id, ...session });
+                }
+
+                // Filter for upcoming sessions (today or later) and sort by date
+                const now = new Date();
+                const upcomingSessions = sessionArray.filter(session => {
+                    const sessionDateTime = new Date(`${session.date}T${session.time}`);
+                    return sessionDateTime >= now;
+                });
+
+                // Sort by date and time ascending
+                upcomingSessions.sort((a, b) => {
+                    const dateA = new Date(`${a.date}T${a.time}`);
+                    const dateB = new Date(`${b.date}T${b.time}`);
+                    return dateA - dateB;
+                });
+
+                if (upcomingSessions.length === 0) {
+                    sessionsList.innerHTML = `
+                        <div class="text-center py-8">
+                            <i class="fa-solid fa-calendar-day text-slate-500 text-3xl mb-2"></i>
+                            <p class="text-slate-400">Tidak ada sesi mendatang</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Generate HTML for each session
+                let sessionsHtml = '';
+                upcomingSessions.slice(0, 3).forEach(session => { // Show only first 3
+                    const sessionDateTime = new Date(`${session.date}T${session.time}`);
+                    const formattedDateTime = sessionDateTime.toLocaleDateString('id-ID', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+
+                    let typeIcon, typeColor, typeText;
+                    if (session.type === 'offline') {
+                        typeIcon = 'fa-building';
+                        typeColor = 'bg-blue-500/10 text-blue-400';
+                        typeText = 'Offline';
+                    } else {
+                        typeIcon = 'fa-video';
+                        typeColor = 'bg-purple-500/10 text-purple-400';
+                        typeText = 'Online';
+                    }
+
+                    sessionsHtml += `
+                        <div class="bg-slate-700/50 p-4 rounded-lg border border-slate-600">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <h3 class="font-bold text-white">${session.title}</h3>
+                                        <span class="px-2 py-1 text-xs rounded-full ${typeColor}">
+                                            <i class="fa-solid ${typeIcon}"></i> ${typeText}
+                                        </span>
+                                    </div>
+                                    <p class="text-slate-400 text-sm mb-2">${formattedDateTime}</p>
+
+                                    ${session.type === 'offline' ?
+                                        `<div class="flex items-center gap-2 text-sm text-slate-300">
+                                            <i class="fa-solid fa-location-dot text-slate-500"></i>
+                                            <span>${session.location || 'Lokasi belum ditentukan'}</span>
+                                        </div>` :
+                                        `<div class="flex items-center gap-2 text-sm text-slate-300">
+                                            <i class="fa-solid fa-link text-slate-500"></i>
+                                            <a href="${session.link || '#'}" target="_blank" class="text-brand-400 hover:underline">${session.platform || 'Platform belum ditentukan'}</a>
+                                        </div>`
+                                    }
+                                </div>
+                                <div class="text-right">
+                                    <button class="px-3 py-1 bg-amber-600 hover:bg-amber-700 text-white text-xs rounded-lg transition">
+                                        Hadiri
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                sessionsList.innerHTML = sessionsHtml;
+            } catch (error) {
+                console.error('Error loading upcoming sessions:', error);
+                document.getElementById('upcomingSessionsList').innerHTML = `
+                    <div class="text-center py-4 text-red-400">
+                        <i class="fa-solid fa-exclamation-circle text-2xl mb-2"></i>
+                        <p>Terjadi kesalahan saat memuat jadwal sesi</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Function to load payment history for a student
+        async function loadPaymentHistory(studentId) {
+            try {
+                // Get payment history from Firebase
+                const historyRef = database.ref('payment_history');
+                const historySnapshot = await historyRef.orderByChild('studentId').equalTo(studentId).once('value');
+                const history = historySnapshot.val() || {};
+
+                const historyList = document.getElementById('paymentHistoryList');
+
+                // Convert to array and sort by timestamp (newest first)
+                const historyArray = [];
+                for (const [id, record] of Object.entries(history)) {
+                    historyArray.push({ id, ...record });
+                }
+
+                // Sort by timestamp descending
+                historyArray.sort((a, b) => b.timestamp - a.timestamp);
+
+                if (historyArray.length === 0) {
+                    historyList.innerHTML = `
+                        <div class="text-center py-8">
+                            <i class="fa-solid fa-receipt text-slate-500 text-3xl mb-2"></i>
+                            <p class="text-slate-400">Belum ada riwayat pembayaran</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Generate HTML for each payment record
+                let historyHtml = '';
+                historyArray.forEach(record => {
+                    const date = new Date(record.timestamp);
+                    const formattedDate = date.toLocaleDateString('id-ID', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+
+                    let statusBadge = '';
+                    if (record.paymentType === 'down_payment') {
+                        statusBadge = `<span class="px-2 py-1 text-xs rounded-full bg-amber-900/30 text-amber-400">Down Payment</span>`;
+                    } else if (record.paymentType.startsWith('installment_')) {
+                        statusBadge = `<span class="px-2 py-1 text-xs rounded-full bg-emerald-900/30 text-emerald-400">Cicilan</span>`;
+                    } else {
+                        statusBadge = `<span class="px-2 py-1 text-xs rounded-full bg-slate-900/30 text-slate-400">${record.paymentType}</span>`;
+                    }
+
+                    historyHtml += `
+                        <div class="bg-slate-700/50 p-4 rounded-lg border border-slate-600">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <h3 class="font-bold text-white">${record.description}</h3>
+                                        ${statusBadge}
+                                    </div>
+                                    <p class="text-slate-400 text-sm mb-2">${formattedDate}</p>
+                                    <p class="text-emerald-400 font-bold">Rp ${record.amount.toLocaleString('id-ID')}</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="px-2 py-1 text-xs rounded-full bg-green-900/30 text-green-400">Lunas</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                historyList.innerHTML = historyHtml;
+            } catch (error) {
+                console.error('Error loading payment history:', error);
+                document.getElementById('paymentHistoryList').innerHTML = `
+                    <div class="text-center py-4 text-red-400">
+                        <i class="fa-solid fa-exclamation-circle text-2xl mb-2"></i>
+                        <p>Terjadi kesalahan saat memuat riwayat pembayaran</p>
+                    </div>
+                `;
+            }
         }
 
         // Function to show instructor dashboard
         function showInstructorDashboard(userData) {
             // Update instructor dashboard with user data
             document.getElementById('instructorName').textContent = userData.fullName || userData.displayName || 'N/A';
-            document.getElementById('instructorEmail').textContent = userData.email || 'N/A';
+            document.getElementById('instructorEmailText').textContent = userData.email || 'N/A';
 
             // Load instructor dashboard data
             loadInstructorDashboardData(userData.uid);
@@ -2449,6 +3367,9 @@
                 if (auth.currentUser) {
                     await checkUserRegistrationStatus(auth.currentUser.uid);
                 }
+            } else {
+                // If no saved user, ensure UI is in logged out state
+                updateUIAfterLogout();
             }
         });
 
