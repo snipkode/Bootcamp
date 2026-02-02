@@ -402,7 +402,7 @@
 
     <!-- Registration Form Modal -->
     <div id="registrationModal" class="fixed inset-0 bg-black bg-opacity-70 hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-8 border border-brand-500 relative shadow-2xl">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-8 border border-brand-500 relative shadow-2xl">
             <button onclick="closeRegistrationForm()" class="absolute top-4 right-4 text-slate-400 hover:text-brand-600">
                 <i class="fas fa-times text-xl"></i>
             </button>
@@ -413,16 +413,114 @@
                 <p class="text-slate-600 text-sm">Bootcamp Fullstack Mobile Development</p>
             </div>
 
-            <!-- Payment Info Box -->
-            <div class="bg-brand-50 border border-brand-200 rounded-xl p-4 mb-6 text-center">
-                <h4 class="font-bold text-brand-700 mb-2 flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-tag text-brand-600"></i> Biaya Investasi
+            <!-- Benefits Section -->
+            <div class="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-xl p-5 mb-6">
+                <h4 class="font-bold text-green-800 mb-3 flex items-center justify-center gap-2 text-center">
+                    <i class="fa-solid fa-gift text-green-600"></i> Benefit Yang Akan Anda Dapatkan
                 </h4>
-                <div class="space-y-2">
-                    <p class="text-lg font-bold text-brand-800">Rp 5.000.000</p>
-                    <p class="text-sm text-slate-600">Dapat dicicil dengan DP 20%</p>
-                    <p class="text-xs text-slate-500">Sisanya Rp 1.000.000/bulan</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex items-start gap-2">
+                        <i class="fa-solid fa-certificate text-green-600 mt-1"></i>
+                        <div>
+                            <h5 class="font-semibold text-green-700">Sertifikat Kelulusan</h5>
+                            <p class="text-xs text-slate-600">Sertifikat resmi yang dapat ditampilkan di LinkedIn dan CV Anda</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-2">
+                        <i class="fa-solid fa-briefcase text-blue-600 mt-1"></i>
+                        <div>
+                            <h5 class="font-semibold text-blue-700">Rekomendasi Kerja</h5>
+                            <p class="text-xs text-slate-600">Akses ke jaringan perusahaan mitra untuk peluang kerja</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-2">
+                        <i class="fa-solid fa-file-lines text-purple-600 mt-1"></i>
+                        <div>
+                            <h5 class="font-semibold text-purple-700">Bantuan Pembuatan CV</h5>
+                            <p class="text-xs text-slate-600">Template CV profesional dan bimbingan penulisan</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-2">
+                        <i class="fa-solid fa-laptop-code text-orange-600 mt-1"></i>
+                        <div>
+                            <h5 class="font-semibold text-orange-700">Personal Website</h5>
+                            <p class="text-xs text-slate-600">Website portfolio profesional untuk menampilkan proyek Anda</p>
+                        </div>
+                    </div>
                 </div>
+            </div>
+
+            <!-- Instructor Info -->
+            <div class="bg-gradient-to-br from-indigo-900 to-purple-900 border-2 border-indigo-700 rounded-2xl p-6 mb-6 shadow-lg">
+                <h4 class="font-bold text-white mb-4 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-chalkboard-user text-yellow-400"></i> Instruktur Profesional
+                </h4>
+
+                <div class="flex items-center gap-5">
+                    <div class="bg-gradient-to-br from-indigo-700 to-purple-800 border-2 border-indigo-500 rounded-xl w-20 h-20 flex items-center justify-center text-white text-2xl">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h5 class="font-bold text-xl text-white mb-1">Alam Santiko Wibowo, S.Kom., S.H.</h5>
+                        <p class="text-lg text-indigo-200 mb-1">IT Senior Fullstack Developer</p>
+                        <p class="text-sm text-indigo-300">Great Eastern Life Insurance</p>
+
+                        <div class="mt-3 pt-3 border-t border-indigo-700">
+                            <p class="text-xs text-indigo-200 italic">Pengalaman lebih dari 10 tahun di bidang pengembangan perangkat lunak dan keamanan informasi</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Info Box with Emotional Pricing -->
+            <div class="bg-gradient-to-r from-red-50 to-yellow-50 border border-red-200 rounded-xl p-5 mb-6 text-center relative overflow-hidden">
+                <!-- Decorative elements -->
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 to-yellow-500"></div>
+
+                <h4 class="font-bold text-red-800 mb-3 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-fire text-red-600"></i> Harga Spesial Hari Ini!
+                </h4>
+
+                <div class="mb-3">
+                    <p class="line-through text-red-500 text-sm">Rp 25.000.000</p>
+                    <p class="text-3xl font-extrabold text-green-600 mt-1">Rp 5.000.000</p>
+                    <p class="text-xs text-slate-600 mt-1">Hemat lebih dari 80%</p>
+                </div>
+
+                <div class="bg-red-100 border border-red-300 rounded-lg p-3 mb-3">
+                    <p class="text-red-700 font-bold text-sm">Penawaran Berakhir Dalam:</p>
+                    <div id="countdownTimer" class="flex justify-center gap-2 mt-2">
+                        <div class="flex flex-col items-center">
+                            <span class="bg-red-600 text-white font-bold w-10 h-10 flex items-center justify-center rounded">14</span>
+                            <span class="text-xs text-slate-600 mt-1">Hari</span>
+                        </div>
+                        <span class="text-2xl text-red-600 font-bold">:</span>
+                        <div class="flex flex-col items-center">
+                            <span class="bg-red-600 text-white font-bold w-10 h-10 flex items-center justify-center rounded">00</span>
+                            <span class="text-xs text-slate-600 mt-1">Jam</span>
+                        </div>
+                        <span class="text-2xl text-red-600 font-bold">:</span>
+                        <div class="flex flex-col items-center">
+                            <span class="bg-red-600 text-white font-bold w-10 h-10 flex items-center justify-center rounded">00</span>
+                            <span class="text-xs text-slate-600 mt-1">Min</span>
+                        </div>
+                        <span class="text-2xl text-red-600 font-bold">:</span>
+                        <div class="flex flex-col items-center">
+                            <span class="bg-red-600 text-white font-bold w-10 h-10 flex items-center justify-center rounded">00</span>
+                            <span class="text-xs text-slate-600 mt-1">Det</span>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="text-sm text-slate-700">Dapatkan semua benefit termasuk sertifikat & rekomendasi kerja!</p>
+
+                <button type="button" onclick="resetCountdown()" class="mt-3 text-xs text-red-600 hover:text-red-800 font-semibold underline">
+                    Atur Ulang Timer
+                </button>
             </div>
 
             <form id="registrationForm">
@@ -437,13 +535,24 @@
                     >
                 </div>
 
-                <div class="mb-6">
+                <div class="mb-4">
                     <label for="email" class="block text-slate-700 mb-2 font-medium">Email</label>
                     <input
                         type="email"
                         id="email"
                         class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3 text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none transition"
                         placeholder="Masukkan email Anda"
+                        required
+                    >
+                </div>
+
+                <div class="mb-6">
+                    <label for="phone" class="block text-slate-700 mb-2 font-medium">Nomor WhatsApp</label>
+                    <input
+                        type="tel"
+                        id="phone"
+                        class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3 text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none transition"
+                        placeholder="Masukkan nomor WhatsApp Anda"
                         required
                     >
                 </div>
@@ -597,10 +706,11 @@
 
             const fullName = document.getElementById('fullName').value;
             const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
 
             // Create the WhatsApp message
-            const message = `Halo! Saya ingin mendaftar bootcamp Fullstack Mobile.\n\nNama: ${fullName}\nEmail: ${email}\n\nMohon info lebih lanjut.`;
-            const phoneNumber = '6282125497764'; // Indonesian format without leading 0
+            const message = `Halo! Saya ingin mendaftar bootcamp Fullstack Mobile.\n\nNama: ${fullName}\nEmail: ${email}\nWhatsApp: ${phone}\n\nMohon info lebih lanjut.`;
+            const phoneNumber = phone.replace(/^0/, '62'); // Convert Indonesian format (08xx) to international (628xx)
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
             // Open WhatsApp in a new tab
@@ -612,6 +722,54 @@
             // Reset the form
             document.getElementById('registrationForm').reset();
         });
+
+        // Countdown Timer Functionality
+        function initializeCountdown() {
+            // Set the target date to 14 days from now
+            const startDate = localStorage.getItem('countdownStart');
+            let targetDate;
+
+            if (startDate) {
+                targetDate = new Date(startDate);
+            } else {
+                targetDate = new Date();
+                targetDate.setDate(targetDate.getDate() + 14);
+                localStorage.setItem('countdownStart', targetDate.toISOString());
+            }
+
+            const timerInterval = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = targetDate.getTime() - now;
+
+                // Calculate days, hours, minutes, seconds
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Display the result
+                document.querySelector('#countdownTimer div:nth-child(1) span:first-child').innerHTML = days;
+                document.querySelector('#countdownTimer div:nth-child(3) span:first-child').innerHTML = hours;
+                document.querySelector('#countdownTimer div:nth-child(5) span:first-child').innerHTML = minutes;
+                document.querySelector('#countdownTimer div:nth-child(7) span:first-child').innerHTML = seconds;
+
+                // If the countdown is finished
+                if (distance < 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById('countdownTimer').innerHTML = "<p class='text-red-600 font-bold'>Penawaran telah berakhir!</p>";
+                }
+            }, 1000);
+        }
+
+        // Function to reset the timer
+        function resetCountdown() {
+            localStorage.removeItem('countdownStart');
+            // Reload the page to restart the timer
+            location.reload();
+        }
+
+        // Initialize the countdown when the page loads
+        document.addEventListener('DOMContentLoaded', initializeCountdown);
 
         // Close modal when clicking outside of it
         document.getElementById('registrationModal').addEventListener('click', function(e) {
