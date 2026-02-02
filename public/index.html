@@ -12,7 +12,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Markdown Parser (Marked) for AI Response -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
     <script>
         tailwind.config = {
             theme: {
@@ -73,7 +78,7 @@
 <body class="bg-slate-900 text-slate-50 font-sans antialiased">
 
     <!-- Navbar -->
-    <nav class="fixed w-full z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+    <nav class="fixed w-full z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 hidden-on-login">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center gap-2">
@@ -97,7 +102,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <header id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+    <header id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden hidden-on-login">
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
             <div class="absolute top-[-10%] right-[-5%] w-96 h-96 bg-brand-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
             <div class="absolute top-[20%] left-[-10%] w-72 h-72 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
@@ -125,7 +130,7 @@
     </header>
 
     <!-- Tech Stack Logos -->
-    <div id="stack" class="py-10 border-y border-slate-800 bg-slate-800/30">
+    <div id="stack" class="py-10 border-y border-slate-800 bg-slate-800/30 hidden-on-login">
         <div class="max-w-7xl mx-auto px-4 text-center">
             <p class="text-slate-500 text-sm font-semibold uppercase tracking-wider mb-6">Tech Stack Modern yang Akan Anda Pelajari</p>
             <div class="flex flex-wrap justify-center gap-8 md:gap-16 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
@@ -154,7 +159,7 @@
     </div>
 
     <!-- Curriculum Section -->
-    <section id="curriculum" class="py-20 relative">
+    <section id="curriculum" class="py-20 relative hidden-on-login">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold mb-4">Kurikulum Intensif 12 Minggu</h2>
@@ -294,7 +299,7 @@
     </section>
 
     <!-- GEMINI AI SECTION -->
-    <section id="ai-consultant" class="py-20 relative bg-slate-900 border-t border-slate-800">
+    <section id="ai-consultant" class="py-20 relative bg-slate-900 border-t border-slate-800 hidden-on-login">
         <!-- Decoration -->
         <div class="absolute left-0 bottom-0 w-full h-full overflow-hidden pointer-events-none">
              <div class="absolute bottom-[-10%] left-[-5%] w-96 h-96 bg-purple-900/20 rounded-full mix-blend-screen filter blur-3xl opacity-30"></div>
@@ -361,7 +366,7 @@
     </section>
 
     <!-- Outcome Section -->
-    <section class="py-20 bg-slate-800">
+    <section class="py-20 bg-slate-800 hidden-on-login">
         <div class="max-w-4xl mx-auto px-4 text-center">
             <h2 class="text-3xl font-bold mb-8">Apa yang akan Anda Bawa Pulang?</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -385,7 +390,7 @@
     </section>
 
     <!-- CTA Section -->
-    <section id="cta" class="py-24 relative overflow-hidden">
+    <section id="cta" class="py-24 relative overflow-hidden hidden-on-login">
         <div class="absolute inset-0 bg-brand-600 opacity-10"></div>
         <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
             <h2 class="text-4xl font-bold mb-6">Siap Mengubah Karir Anda?</h2>
@@ -539,6 +544,20 @@
                 <p class="text-sm text-slate-700">Dapatkan semua benefit termasuk sertifikat & rekomendasi kerja!</p>
             </div>
 
+            <!-- Google Login Section -->
+            <div id="google-login-section" class="mb-6">
+                <div id="google-login-btn" class="block">
+                    <button
+                        type="button"
+                        onclick="signInWithGoogle()"
+                        class="w-full py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg shadow-lg transition flex items-center justify-center gap-3"
+                    >
+                        <i class="fab fa-google"></i> Daftar dengan Google
+                    </button>
+                </div>
+                <div id="user-info" class="hidden"></div>
+            </div>
+
             <form id="registrationForm">
                 <div class="mb-4">
                     <label for="fullName" class="block text-slate-700 mb-2 font-medium">Nama Lengkap</label>
@@ -585,6 +604,493 @@
                 </p>
             </form>
             </div> <!-- Closing div for scrollable container -->
+        </div>
+    </div>
+
+    <!-- Student Dashboard -->
+    <div id="studentDashboard" class="hidden fixed inset-0 bg-slate-900 z-50 overflow-y-auto">
+        <div class="container mx-auto px-4 py-8">
+            <div class="flex justify-between items-center mb-8">
+                <h1 class="text-3xl font-bold text-white">Dashboard <span class="text-brand-500">Student</span></h1>
+                <button onclick="signOut()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+                    Logout
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Student Profile Card -->
+                <div class="lg:col-span-1">
+                    <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                        <div class="flex flex-col items-center text-center mb-6">
+                            <div class="bg-gradient-to-br from-indigo-700 to-purple-800 border-2 border-indigo-500 rounded-xl w-24 h-24 flex items-center justify-center text-white text-3xl mb-4">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <h2 id="dashboardFullName" class="text-xl font-bold text-white"></h2>
+                            <p id="dashboardEmail" class="text-slate-400"></p>
+                            <p id="dashboardPhone" class="text-slate-400"></p>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="bg-slate-700 p-4 rounded-lg">
+                                <h3 class="font-semibold text-slate-300 mb-2">Status Keanggotaan</h3>
+                                <p class="text-green-400 font-medium">Aktif</p>
+                            </div>
+
+                            <div class="bg-slate-700 p-4 rounded-lg">
+                                <h3 class="font-semibold text-slate-300 mb-2">Tanggal Bergabung</h3>
+                                <p id="joinDate" class="text-slate-200"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Area -->
+                <div class="lg:col-span-2">
+                    <!-- Payment Status Section -->
+                    <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 mb-8">
+                        <h2 class="text-xl font-bold text-white mb-4">Status Pembayaran</h2>
+                        <div class="mb-6">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-slate-300">Total Biaya: Rp 5.000.000</span>
+                                <span id="overallPaymentStatus" class="text-slate-300 font-medium">Belum Dibayar</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-2.5">
+                                <div id="paymentProgressBar" class="bg-yellow-500 h-2.5 rounded-full" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Down Payment -->
+                            <div class="bg-slate-700 p-4 rounded-lg">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-semibold text-slate-300">Down Payment (20%)</h3>
+                                    <span id="dpStatus" class="px-2 py-1 text-xs rounded-full bg-yellow-900/30 text-yellow-400">Pending</span>
+                                </div>
+                                <p class="text-white font-bold">Rp 1.000.000</p>
+                                <p id="dpDueDate" class="text-slate-400 text-sm">Jatuh tempo: -</p>
+                                <button id="dpPayButton" class="mt-3 w-full py-2 bg-yellow-600 hover:bg-yellow-700 text-white text-sm rounded-lg transition hidden">
+                                    Bayar Sekarang
+                                </button>
+                            </div>
+
+                            <!-- Installments -->
+                            <div class="bg-slate-700 p-4 rounded-lg">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-semibold text-slate-300">Cicilan Bulanan</h3>
+                                    <span id="installmentStatus" class="px-2 py-1 text-xs rounded-full bg-green-900/30 text-green-400">-</span>
+                                </div>
+                                <p class="text-white font-bold">Rp 1.000.000 x 4 bulan</p>
+                                <p id="installmentInfo" class="text-slate-400 text-sm">Sisa: -</p>
+                                <button id="installmentPayButton" class="mt-3 w-full py-2 bg-green-600 hover:bg-green-700 text-white text-sm rounded-lg transition hidden">
+                                    Bayar Cicilan
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Progress Section -->
+                    <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 mb-8">
+                        <h2 class="text-xl font-bold text-white mb-4">Progress Kamu</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-slate-300">Fase 1: Fundamental Foundation</span>
+                                    <span class="text-slate-300">75%</span>
+                                </div>
+                                <div class="w-full bg-slate-700 rounded-full h-2.5">
+                                    <div class="bg-brand-600 h-2.5 rounded-full" style="width: 75%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-slate-300">Fase 2: Core Skills Mastery</span>
+                                    <span class="text-slate-300">30%</span>
+                                </div>
+                                <div class="w-full bg-slate-700 rounded-full h-2.5">
+                                    <div class="bg-brand-600 h-2.5 rounded-full" style="width: 30%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-slate-300">Fase 3: Auth & Integration</span>
+                                    <span class="text-slate-300">0%</span>
+                                </div>
+                                <div class="w-full bg-slate-700 rounded-full h-2.5">
+                                    <div class="bg-brand-600 h-2.5 rounded-full" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Resources Section -->
+                    <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                        <h2 class="text-xl font-bold text-white mb-4">Resource Belajar</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <a href="#" class="bg-slate-700 hover:bg-slate-600 p-4 rounded-lg transition flex items-center gap-3">
+                                <i class="fa-solid fa-book-open text-brand-500 text-xl"></i>
+                                <span class="text-white">Modul Pembelajaran</span>
+                            </a>
+                            <a href="#" class="bg-slate-700 hover:bg-slate-600 p-4 rounded-lg transition flex items-center gap-3">
+                                <i class="fa-solid fa-video text-purple-500 text-xl"></i>
+                                <span class="text-white">Video Tutorial</span>
+                            </a>
+                            <a href="#" class="bg-slate-700 hover:bg-slate-600 p-4 rounded-lg transition flex items-center gap-3">
+                                <i class="fa-solid fa-chalkboard-user text-green-500 text-xl"></i>
+                                <span class="text-white">Live Session</span>
+                            </a>
+                            <a href="#" class="bg-slate-700 hover:bg-slate-600 p-4 rounded-lg transition flex items-center gap-3">
+                                <i class="fa-solid fa-comments text-blue-500 text-xl"></i>
+                                <span class="text-white">Forum Diskusi</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Instructor Dashboard -->
+    <div id="instructorDashboard" class="hidden fixed inset-0 bg-slate-900 z-50 overflow-y-auto">
+        <div class="container mx-auto px-4 py-8">
+            <div class="flex justify-between items-center mb-8">
+                <h1 class="text-3xl font-bold text-white">Dashboard <span class="text-purple-500">Instruktur</span></h1>
+                <button onclick="signOut()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+                    Logout
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-8">
+                <!-- Stats Cards -->
+                <div class="bg-gradient-to-br from-indigo-900 to-purple-900 rounded-xl p-6 border border-indigo-700">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-indigo-300 text-sm">Total Siswa</p>
+                            <p id="totalStudents" class="text-3xl font-bold text-white">0</p>
+                        </div>
+                        <div class="bg-indigo-700/30 p-3 rounded-lg">
+                            <i class="fa-solid fa-users text-indigo-300 text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-green-900 to-teal-900 rounded-xl p-6 border border-green-700">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-green-300 text-sm">Siswa Aktif</p>
+                            <p id="activeStudents" class="text-3xl font-bold text-white">0</p>
+                        </div>
+                        <div class="bg-green-700/30 p-3 rounded-lg">
+                            <i class="fa-solid fa-user-check text-green-300 text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-blue-900 to-cyan-900 rounded-xl p-6 border border-blue-700">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-blue-300 text-sm">Sesi Live</p>
+                            <p id="liveSessions" class="text-3xl font-bold text-white">0</p>
+                        </div>
+                        <div class="bg-blue-700/30 p-3 rounded-lg">
+                            <i class="fa-solid fa-video text-blue-300 text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-yellow-900 to-orange-900 rounded-xl p-6 border border-yellow-700">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-yellow-300 text-sm">Kompleksi</p>
+                            <p id="completionRate" class="text-3xl font-bold text-white">0%</p>
+                        </div>
+                        <div class="bg-yellow-700/30 p-3 rounded-lg">
+                            <i class="fa-solid fa-chart-line text-yellow-300 text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Students List -->
+                <div class="lg:col-span-2">
+                    <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-xl font-bold text-white">Daftar Siswa</h2>
+                            <div class="relative">
+                                <input
+                                    type="text"
+                                    id="studentSearch"
+                                    placeholder="Cari siswa..."
+                                    class="bg-slate-700 text-white rounded-lg px-4 py-2 pl-10 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                                >
+                                <i class="fa-solid fa-search absolute left-3 top-3 text-slate-400"></i>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm text-left text-slate-300">
+                                <thead class="text-xs text-slate-400 uppercase border-b border-slate-700">
+                                    <tr>
+                                        <th scope="col" class="px-4 py-3">Nama</th>
+                                        <th scope="col" class="px-4 py-3">Email</th>
+                                        <th scope="col" class="px-4 py-3">Status</th>
+                                        <th scope="col" class="px-4 py-3">Progress</th>
+                                        <th scope="col" class="px-4 py-3">Pembayaran</th>
+                                        <th scope="col" class="px-4 py-3">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="studentsTableBody">
+                                    <!-- Students will be populated here dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instructor Profile & Actions -->
+                <div>
+                    <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 mb-8">
+                        <div class="flex flex-col items-center text-center mb-6">
+                            <div class="bg-gradient-to-br from-indigo-700 to-purple-800 border-2 border-indigo-500 rounded-xl w-24 h-24 flex items-center justify-center text-white text-3xl mb-4">
+                                <i class="fa-solid fa-chalkboard-user"></i>
+                            </div>
+                            <h2 id="instructorName" class="text-xl font-bold text-white"></h2>
+                            <p id="instructorEmail" class="text-slate-400"></p>
+                        </div>
+
+                        <div class="space-y-4">
+                            <button class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-lg shadow-lg transition">
+                                <i class="fa-solid fa-plus mr-2"></i> Tambah Materi
+                            </button>
+                            <button onclick="openScheduleSessionModal()" class="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-lg shadow-lg transition">
+                                <i class="fa-solid fa-calendar-check mr-2"></i> Jadwalkan Live Session
+                            </button>
+                            <button class="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg shadow-lg transition">
+                                <i class="fa-solid fa-message mr-2"></i> Kirim Pengumuman
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Scheduled Sessions -->
+                    <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 mb-8">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-xl font-bold text-white">Jadwal Sesi Mendatang</h2>
+                            <button onclick="openScheduleSessionModal()" class="px-3 py-1 bg-purple-600 hover:bg-purple-700 text-white text-sm rounded-lg transition">
+                                <i class="fa-solid fa-plus mr-1"></i> Tambah
+                            </button>
+                        </div>
+                        <div class="space-y-4" id="scheduledSessions">
+                            <!-- Scheduled sessions will be populated here dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                        <h2 class="text-xl font-bold text-white mb-4">Aktivitas Terbaru</h2>
+                        <div class="space-y-4" id="recentActivity">
+                            <!-- Activities will be populated here dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Schedule Session Modal -->
+    <div id="scheduleSessionModal" class="fixed inset-0 bg-black bg-opacity-70 hidden z-50 flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-2xl w-full mx-4 my-8 border border-slate-300">
+            <div class="p-6 md:p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-slate-800">Jadwalkan Sesi Baru</h3>
+                    <button onclick="closeScheduleSessionModal()" class="text-slate-400 hover:text-slate-600">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+
+                <form id="sessionForm">
+                    <div class="mb-4">
+                        <label for="sessionTitle" class="block text-slate-700 mb-2 font-medium">Judul Sesi</label>
+                        <input
+                            type="text"
+                            id="sessionTitle"
+                            class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3 text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none transition"
+                            placeholder="Masukkan judul sesi"
+                            required
+                        >
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="sessionType" class="block text-slate-700 mb-2 font-medium">Tipe Sesi</label>
+                        <select
+                            id="sessionType"
+                            class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3 text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none transition"
+                            onchange="toggleLocationFields()"
+                            required
+                        >
+                            <option value="">Pilih tipe sesi</option>
+                            <option value="offline">Offline (Di Tempat Fisik)</option>
+                            <option value="online">Online (Via Platform)</option>
+                        </select>
+                    </div>
+
+                    <div id="locationFields" class="hidden">
+                        <div class="mb-4">
+                            <label for="sessionLocation" class="block text-slate-700 mb-2 font-medium">Lokasi</label>
+                            <input
+                                type="text"
+                                id="sessionLocation"
+                                class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3 text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none transition"
+                                placeholder="Alamat lengkap tempat sesi"
+                            >
+                        </div>
+                    </div>
+
+                    <div id="platformFields" class="hidden">
+                        <div class="mb-4">
+                            <label for="sessionPlatform" class="block text-slate-700 mb-2 font-medium">Platform Online</label>
+                            <select
+                                id="sessionPlatform"
+                                class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3 text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none transition"
+                            >
+                                <option value="">Pilih platform</option>
+                                <option value="zoom">Zoom</option>
+                                <option value="gmeet">Google Meet</option>
+                                <option value="teams">Microsoft Teams</option>
+                                <option value="other">Lainnya</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="sessionLink" class="block text-slate-700 mb-2 font-medium">Link Sesi</label>
+                            <input
+                                type="url"
+                                id="sessionLink"
+                                class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3 text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none transition"
+                                placeholder="https://meet.google.com/xxx-xxxx-xxx"
+                            >
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="sessionPassword" class="block text-slate-700 mb-2 font-medium">Password (Opsional)</label>
+                            <input
+                                type="text"
+                                id="sessionPassword"
+                                class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3 text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none transition"
+                                placeholder="Password jika diperlukan"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label for="sessionDate" class="block text-slate-700 mb-2 font-medium">Tanggal</label>
+                            <input
+                                type="date"
+                                id="sessionDate"
+                                class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3 text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none transition"
+                                required
+                            >
+                        </div>
+
+                        <div>
+                            <label for="sessionTime" class="block text-slate-700 mb-2 font-medium">Waktu</label>
+                            <input
+                                type="time"
+                                id="sessionTime"
+                                class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3 text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none transition"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="sessionDuration" class="block text-slate-700 mb-2 font-medium">Durasi (menit)</label>
+                        <input
+                            type="number"
+                            id="sessionDuration"
+                            class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3 text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none transition"
+                            placeholder="Durasi dalam menit"
+                            min="15"
+                            value="60"
+                            required
+                        >
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="sessionDescription" class="block text-slate-700 mb-2 font-medium">Deskripsi</label>
+                        <textarea
+                            id="sessionDescription"
+                            rows="3"
+                            class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3 text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none transition resize-none"
+                            placeholder="Deskripsikan detail sesi..."
+                        ></textarea>
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-lg shadow-lg transition"
+                    >
+                        <i class="fa-solid fa-calendar-plus mr-2"></i> Buat Jadwal Sesi
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Validation Modal -->
+    <div id="paymentValidationModal" class="fixed inset-0 bg-black bg-opacity-70 hidden z-50 flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-2xl w-full mx-4 my-8 border border-slate-300">
+            <div class="p-6 md:p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-slate-800">Validasi Pembayaran - <span id="validationStudentName"></span></h3>
+                    <button onclick="closePaymentValidationModal()" class="text-slate-400 hover:text-slate-600">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+
+                <div class="mb-6">
+                    <h4 class="font-bold text-lg text-slate-700 mb-3">Detail Pembayaran</h4>
+                    <div id="paymentDetailsContainer">
+                        <!-- Payment details will be loaded here -->
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <h4 class="font-bold text-lg text-slate-700 mb-3">Upload Bukti Transfer</h4>
+                    <div class="border-2 border-dashed border-slate-300 rounded-lg p-8 text-center cursor-pointer hover:bg-slate-50 transition" onclick="document.getElementById('proofUpload').click()">
+                        <i class="fa-solid fa-cloud-arrow-up text-slate-400 text-4xl mb-3"></i>
+                        <p class="text-slate-600">Klik untuk upload bukti transfer</p>
+                        <p class="text-sm text-slate-500 mt-1">Format: JPG, PNG, PDF (Max 5MB)</p>
+                        <input type="file" id="proofUpload" class="hidden" accept="image/*,.pdf">
+                    </div>
+                    <div id="uploadedProofPreview" class="mt-3 hidden">
+                        <div class="flex items-center justify-between bg-slate-100 p-3 rounded-lg">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-file-image text-blue-500 mr-2"></i>
+                                <span id="fileName" class="text-slate-700"></span>
+                            </div>
+                            <button type="button" onclick="removeProof()" class="text-red-500 hover:text-red-700">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <button
+                        onclick="updatePaymentStatus(currentValidatedStudentId, 'paid')"
+                        class="py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg shadow-lg transition"
+                    >
+                        <i class="fa-solid fa-check mr-2"></i> Setujui
+                    </button>
+                    <button
+                        onclick="updatePaymentStatus(currentValidatedStudentId, 'rejected')"
+                        class="py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg shadow-lg transition"
+                    >
+                        <i class="fa-solid fa-times mr-2"></i> Tolak
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -718,12 +1224,28 @@
         }
 
         // Handle form submission to open WhatsApp
-        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+        document.getElementById('registrationForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
             const fullName = document.getElementById('fullName').value;
             const email = document.getElementById('email').value;
             const phone = document.getElementById('phone').value;
+
+            // Validate required fields after Google login
+            if (!fullName || !phone) {
+                alert('Mohon lengkapi Nama Lengkap dan Nomor WhatsApp Anda.');
+                return;
+            }
+
+            // Save user data to Firebase Realtime Database
+            try {
+                await saveUserDataToFirebase(fullName, email, phone);
+                console.log('User data saved to Firebase successfully');
+            } catch (error) {
+                console.error('Error saving user data to Firebase:', error);
+                alert('Terjadi kesalahan saat menyimpan data. Silakan coba lagi.');
+                return;
+            }
 
             // Create the WhatsApp message
             const message = `Halo! Saya ingin mendaftar bootcamp Fullstack Mobile.\n\nNama: ${fullName}\nEmail: ${email}\nWhatsApp: ${phone}\n\nMohon info lebih lanjut.`;
@@ -738,6 +1260,649 @@
 
             // Reset the form
             document.getElementById('registrationForm').reset();
+        });
+
+        // Function to populate form with Google account data when user signs in
+        function populateFormWithUserData(userData) {
+            if (userData.displayName && !document.getElementById('fullName').value) {
+                document.getElementById('fullName').value = userData.displayName;
+            }
+            if (userData.email && !document.getElementById('email').value) {
+                document.getElementById('email').value = userData.email;
+            }
+        }
+
+        // Function to save user data to Firebase Realtime Database
+        async function saveUserDataToFirebase(fullName, email, phone) {
+            // Get current user
+            const user = auth.currentUser;
+
+            if (!user) {
+                throw new Error('User not authenticated');
+            }
+
+            // Create user data object
+            const userData = {
+                uid: user.uid,
+                fullName: fullName,
+                email: email,
+                phone: phone,
+                role: 'student', // Default role is student
+                createdAt: firebase.database.ServerValue.TIMESTAMP,
+                lastLoginAt: firebase.database.ServerValue.TIMESTAMP
+            };
+
+            // Save to Firebase Realtime Database
+            const userRef = database.ref('users/' + user.uid);
+            await userRef.set(userData);
+
+            // Also save to a separate students list for easier querying
+            const studentsRef = database.ref('students/' + user.uid);
+            await studentsRef.set({
+                uid: user.uid,
+                fullName: fullName,
+                email: email,
+                phone: phone,
+                enrolledAt: firebase.database.ServerValue.TIMESTAMP
+            });
+
+            return userData;
+        }
+
+        // Function to update user role (for admin/instructor promotion)
+        async function updateUserRole(userId, newRole) {
+            const userRef = database.ref('users/' + userId);
+            await userRef.update({
+                role: newRole
+            });
+        }
+
+        // Function to create payment plan for a student
+        async function createPaymentPlan(studentId, studentName, studentEmail) {
+            // Total course fee: 5,000,000
+            const totalFee = 5000000;
+            const downPaymentPercentage = 20;
+            const downPaymentAmount = totalFee * (downPaymentPercentage / 100); // 1,000,000
+            const remainingAmount = totalFee - downPaymentAmount; // 4,000,000
+            const monthlyInstallment = 1000000; // 4 months
+            const numberOfInstallments = remainingAmount / monthlyInstallment; // 4
+
+            // Create payment plan object
+            const paymentPlan = {
+                totalFee: totalFee,
+                downPayment: {
+                    amount: downPaymentAmount,
+                    dueDate: new Date().toISOString().split('T')[0], // Today
+                    status: 'pending', // pending, paid, overdue
+                    paidAt: null
+                },
+                installments: [],
+                createdAt: firebase.database.ServerValue.TIMESTAMP,
+                updatedAt: firebase.database.ServerValue.TIMESTAMP
+            };
+
+            // Generate installment schedule
+            const today = new Date();
+            for (let i = 0; i < numberOfInstallments; i++) {
+                const installmentDate = new Date(today);
+                installmentDate.setMonth(today.getMonth() + i + 1); // Next month for first installment
+
+                paymentPlan.installments.push({
+                    id: `installment_${i+1}`,
+                    amount: monthlyInstallment,
+                    dueDate: installmentDate.toISOString().split('T')[0],
+                    status: 'pending',
+                    paidAt: null
+                });
+            }
+
+            // Save payment plan to database
+            const paymentPlanRef = database.ref(`payment_plans/${studentId}`);
+            await paymentPlanRef.set(paymentPlan);
+
+            // Also save to student's record
+            const studentRef = database.ref(`students/${studentId}`);
+            await studentRef.update({
+                paymentPlanId: studentId,
+                paymentStatus: 'pending' // pending, paid, partially_paid
+            });
+
+            // Create payment history entry
+            await addPaymentHistory(studentId, 'created', 'Payment plan created', totalFee, studentName, studentEmail);
+
+            return paymentPlan;
+        }
+
+        // Function to record a payment
+        async function recordPayment(studentId, paymentType, amount, transactionId = null) {
+            const paymentPlanRef = database.ref(`payment_plans/${studentId}`);
+            const paymentPlanSnapshot = await paymentPlanRef.once('value');
+            const paymentPlan = paymentPlanSnapshot.val();
+
+            if (!paymentPlan) {
+                throw new Error('Payment plan not found');
+            }
+
+            let updatedPlan = {...paymentPlan};
+            const now = new Date();
+
+            if (paymentType.startsWith('installment_')) {
+                // Update specific installment
+                const installmentIndex = updatedPlan.installments.findIndex(inst => inst.id === paymentType);
+                if (installmentIndex !== -1) {
+                    updatedPlan.installments[installmentIndex].status = 'paid';
+                    updatedPlan.installments[installmentIndex].paidAt = now.toISOString();
+                }
+            } else if (paymentType === 'down_payment') {
+                // Update down payment
+                updatedPlan.downPayment.status = 'paid';
+                updatedPlan.downPayment.paidAt = now.toISOString();
+            }
+
+            // Update payment plan in database
+            await paymentPlanRef.update(updatedPlan);
+
+            // Update student's payment status
+            const studentRef = database.ref(`students/${studentId}`);
+            const studentSnapshot = await studentRef.once('value');
+            const studentData = studentSnapshot.val();
+
+            // Determine overall payment status
+            let overallStatus = 'pending';
+            const allPaid = updatedPlan.downPayment.status === 'paid' &&
+                           updatedPlan.installments.every(inst => inst.status === 'paid');
+            const somePaid = updatedPlan.downPayment.status === 'paid' ||
+                           updatedPlan.installments.some(inst => inst.status === 'paid');
+
+            if (allPaid) {
+                overallStatus = 'paid';
+            } else if (somePaid) {
+                overallStatus = 'partially_paid';
+            }
+
+            await studentRef.update({
+                paymentStatus: overallStatus
+            });
+
+            // Add to payment history
+            await addPaymentHistory(studentId, paymentType, 'Payment recorded', amount, studentData.fullName, studentData.email, transactionId);
+
+            return updatedPlan;
+        }
+
+        // Function to add payment history
+        async function addPaymentHistory(studentId, paymentType, description, amount, studentName, studentEmail, transactionId = null) {
+            const historyEntry = {
+                studentId,
+                studentName,
+                studentEmail,
+                paymentType,
+                description,
+                amount,
+                transactionId,
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            };
+
+            // Add to payment history
+            const historyRef = database.ref('payment_history');
+            await historyRef.push(historyEntry);
+        }
+
+        // Function to get student's payment plan
+        async function getStudentPaymentPlan(studentId) {
+            const paymentPlanRef = database.ref(`payment_plans/${studentId}`);
+            const snapshot = await paymentPlanRef.once('value');
+            return snapshot.val();
+        }
+
+        // Function to open schedule session modal
+        function openScheduleSessionModal() {
+            document.getElementById('scheduleSessionModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Function to close schedule session modal
+        function closeScheduleSessionModal() {
+            document.getElementById('scheduleSessionModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+
+            // Reset form
+            document.getElementById('sessionForm').reset();
+            document.getElementById('locationFields').classList.add('hidden');
+            document.getElementById('platformFields').classList.add('hidden');
+        }
+
+        // Function to toggle location and platform fields based on session type
+        function toggleLocationFields() {
+            const sessionType = document.getElementById('sessionType').value;
+            const locationFields = document.getElementById('locationFields');
+            const platformFields = document.getElementById('platformFields');
+
+            if (sessionType === 'offline') {
+                locationFields.classList.remove('hidden');
+                platformFields.classList.add('hidden');
+            } else if (sessionType === 'online') {
+                locationFields.classList.add('hidden');
+                platformFields.classList.remove('hidden');
+            } else {
+                locationFields.classList.add('hidden');
+                platformFields.classList.add('hidden');
+            }
+        }
+
+        // Function to save session to Firebase
+        async function saveSessionToFirebase(sessionData) {
+            // Get current instructor
+            const user = auth.currentUser;
+
+            if (!user) {
+                throw new Error('User not authenticated');
+            }
+
+            // Add instructor ID to session data
+            sessionData.instructorId = user.uid;
+            sessionData.createdAt = firebase.database.ServerValue.TIMESTAMP;
+
+            // Generate unique session ID
+            const sessionId = database.ref().child('sessions').push().key;
+
+            // Save to Firebase Realtime Database
+            const sessionRef = database.ref('sessions/' + sessionId);
+            await sessionRef.set(sessionData);
+
+            // Also save to instructor's sessions
+            const instructorSessionRef = database.ref(`instructors/${user.uid}/sessions/${sessionId}`);
+            await instructorSessionRef.set(sessionData);
+
+            return sessionId;
+        }
+
+        // Function to format date for display
+        function formatDate(dateString, timeString) {
+            const date = new Date(`${dateString}T${timeString}`);
+            return date.toLocaleString('id-ID', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Function to format duration
+        function formatDuration(minutes) {
+            const hours = Math.floor(minutes / 60);
+            const mins = minutes % 60;
+            if (hours > 0) {
+                return `${hours} jam ${mins} menit`;
+            }
+            return `${mins} menit`;
+        }
+
+        // Function to load scheduled sessions for instructor
+        async function loadScheduledSessions(instructorUid) {
+            try {
+                // Get instructor's sessions
+                const sessionsSnapshot = await database.ref(`instructors/${instructorUid}/sessions`).orderByChild('date').once('value');
+                const sessions = sessionsSnapshot.val() || {};
+
+                const scheduledSessionsContainer = document.getElementById('scheduledSessions');
+
+                // Clear current sessions
+                scheduledSessionsContainer.innerHTML = '';
+
+                // Convert to array and sort by date/time
+                const sessionArray = [];
+                for (const [id, session] of Object.entries(sessions)) {
+                    sessionArray.push({ id, ...session });
+                }
+
+                // Sort by date and time (ascending)
+                sessionArray.sort((a, b) => {
+                    const dateA = new Date(`${a.date}T${a.time}`);
+                    const dateB = new Date(`${b.date}T${b.time}`);
+                    return dateA - dateB;
+                });
+
+                // Limit to upcoming sessions (next 5)
+                const upcomingSessions = sessionArray.filter(session => {
+                    const sessionDateTime = new Date(`${session.date}T${session.time}`);
+                    return sessionDateTime >= new Date(); // Only show future sessions
+                }).slice(0, 5);
+
+                if (upcomingSessions.length === 0) {
+                    scheduledSessionsContainer.innerHTML = `
+                        <div class="text-center py-8">
+                            <i class="fa-solid fa-calendar-day text-slate-500 text-3xl mb-2"></i>
+                            <p class="text-slate-400">Belum ada sesi yang dijadwalkan</p>
+                            <button onclick="openScheduleSessionModal()" class="mt-3 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm transition">
+                                Jadwalkan Sesi
+                            </button>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Add each session to the container
+                upcomingSessions.forEach(session => {
+                    const sessionElement = document.createElement('div');
+                    sessionElement.className = 'bg-slate-700 rounded-lg p-4 border border-slate-600';
+
+                    // Format the date and time
+                    const formattedDateTime = formatDate(session.date, session.time);
+                    const formattedDuration = formatDuration(session.duration);
+
+                    // Determine icon and color based on session type
+                    let typeIcon, typeColor, typeText;
+                    if (session.type === 'offline') {
+                        typeIcon = 'fa-building';
+                        typeColor = 'bg-blue-500/10 text-blue-400';
+                        typeText = 'Offline';
+                    } else {
+                        typeIcon = 'fa-video';
+                        typeColor = 'bg-purple-500/10 text-purple-400';
+                        typeText = 'Online';
+                    }
+
+                    sessionElement.innerHTML = `
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <h3 class="font-bold text-white">${session.title}</h3>
+                                    <span class="px-2 py-1 text-xs rounded-full ${typeColor}">
+                                        <i class="fa-solid ${typeIcon}"></i> ${typeText}
+                                    </span>
+                                </div>
+                                <p class="text-slate-400 text-sm mb-2">${formattedDateTime} • ${formattedDuration}</p>
+
+                                ${session.type === 'offline' ?
+                                    `<div class="flex items-center gap-2 text-sm text-slate-300">
+                                        <i class="fa-solid fa-location-dot text-slate-500"></i>
+                                        <span>${session.location || 'Lokasi belum ditentukan'}</span>
+                                    </div>` :
+                                    `<div class="flex items-center gap-2 text-sm text-slate-300">
+                                        <i class="fa-solid fa-link text-slate-500"></i>
+                                        <a href="${session.link || '#'}" target="_blank" class="text-brand-400 hover:underline">${session.platform || 'Platform belum ditentukan'}</a>
+                                    </div>`
+                                }
+
+                                <p class="text-slate-400 text-sm mt-2 line-clamp-2">${session.description || 'Tidak ada deskripsi'}</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-600">
+                                    <i class="fa-solid fa-edit"></i>
+                                </button>
+                                <button class="p-2 text-slate-400 hover:text-red-400 rounded-lg hover:bg-slate-600" onclick="deleteSession('${session.id}')">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+
+                    scheduledSessionsContainer.appendChild(sessionElement);
+                });
+            } catch (error) {
+                console.error('Error loading scheduled sessions:', error);
+                document.getElementById('scheduledSessions').innerHTML = `
+                    <div class="text-center py-4">
+                        <p class="text-red-400">Gagal memuat jadwal sesi</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Function to delete a session
+        async function deleteSession(sessionId) {
+            if (!confirm('Apakah Anda yakin ingin menghapus sesi ini?')) {
+                return;
+            }
+
+            try {
+                // Get current instructor
+                const user = auth.currentUser;
+                if (!user) {
+                    throw new Error('User not authenticated');
+                }
+
+                // Remove from both locations in the database
+                await database.ref(`sessions/${sessionId}`).remove();
+                await database.ref(`instructors/${user.uid}/sessions/${sessionId}`).remove();
+
+                // Refresh the scheduled sessions list
+                await loadScheduledSessions(user.uid);
+
+                alert('Sesi berhasil dihapus');
+            } catch (error) {
+                console.error('Error deleting session:', error);
+                alert('Terjadi kesalahan saat menghapus sesi. Silakan coba lagi.');
+            }
+        }
+
+        // Variable to store current validated student ID
+        let currentValidatedStudentId = null;
+
+        // Function to open payment validation modal
+        async function openPaymentValidationModal(studentId, studentName) {
+            currentValidatedStudentId = studentId;
+            document.getElementById('validationStudentName').textContent = studentName;
+
+            // Load payment details for this student
+            await loadPaymentDetailsForValidation(studentId);
+
+            document.getElementById('paymentValidationModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Function to close payment validation modal
+        function closePaymentValidationModal() {
+            document.getElementById('paymentValidationModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+
+            // Reset uploaded proof preview
+            document.getElementById('uploadedProofPreview').classList.add('hidden');
+            document.getElementById('proofUpload').value = '';
+        }
+
+        // Function to load payment details for validation
+        async function loadPaymentDetailsForValidation(studentId) {
+            try {
+                const paymentPlan = await getStudentPaymentPlan(studentId);
+
+                if (!paymentPlan) {
+                    document.getElementById('paymentDetailsContainer').innerHTML = `
+                        <div class="text-center py-4 text-slate-500">
+                            <i class="fa-solid fa-exclamation-triangle text-2xl mb-2"></i>
+                            <p>Data pembayaran tidak ditemukan</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Calculate payment status
+                const dpPaid = paymentPlan.downPayment.status === 'paid';
+                const installmentsPaid = paymentPlan.installments.filter(inst => inst.status === 'paid').length;
+                const totalInstallments = paymentPlan.installments.length;
+
+                // Format the payment details
+                let detailsHTML = `
+                    <div class="bg-slate-100 p-4 rounded-lg mb-4">
+                        <div class="grid grid-cols-2 gap-4 mb-3">
+                            <div>
+                                <p class="text-slate-600 text-sm">Total Biaya</p>
+                                <p class="font-bold">Rp ${paymentPlan.totalFee.toLocaleString('id-ID')}</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-600 text-sm">Status Keseluruhan</p>
+                                <p class="font-bold ${
+                                    dpPaid && installmentsPaid === totalInstallments ? 'text-green-600' :
+                                    dpPaid || installmentsPaid > 0 ? 'text-yellow-600' : 'text-red-600'
+                                }">
+                                    ${dpPaid && installmentsPaid === totalInstallments ? 'Lunas' :
+                                      dpPaid || installmentsPaid > 0 ? 'Sebagian Dibayar' : 'Belum Dibayar'}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-slate-200 pt-3">
+                            <h5 class="font-semibold mb-2">Rincian Pembayaran:</h5>
+
+                            <div class="mb-3">
+                                <div class="flex justify-between items-center">
+                                    <span>Down Payment (20%)</span>
+                                    <span class="font-medium">Rp ${paymentPlan.downPayment.amount.toLocaleString('id-ID')}</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span>Jatuh Tempo: ${paymentPlan.downPayment.dueDate}</span>
+                                    <span class="${
+                                        dpPaid ? 'text-green-600' : 'text-red-600'
+                                    }">${dpPaid ? 'Dibayar' : 'Belum Dibayar'}</span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between items-center">
+                                    <span>Cicilan Bulanan (${totalInstallments} x)</span>
+                                    <span class="font-medium">Rp ${paymentPlan.installments[0]?.amount.toLocaleString('id-ID') || '0'}</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span>Dibayar: ${installmentsPaid}/${totalInstallments}</span>
+                                    <span class="${
+                                        installmentsPaid === totalInstallments ? 'text-green-600' :
+                                        installmentsPaid > 0 ? 'text-yellow-600' : 'text-red-600'
+                                    }">
+                                        ${installmentsPaid === totalInstallments ? 'Lunas' :
+                                         installmentsPaid > 0 ? 'Sebagian' : 'Belum Dibayar'}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                document.getElementById('paymentDetailsContainer').innerHTML = detailsHTML;
+            } catch (error) {
+                console.error('Error loading payment details:', error);
+                document.getElementById('paymentDetailsContainer').innerHTML = `
+                    <div class="text-center py-4 text-red-500">
+                        <i class="fa-solid fa-exclamation-circle text-2xl mb-2"></i>
+                        <p>Error memuat data pembayaran</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Function to update payment status
+        async function updatePaymentStatus(studentId, status) {
+            try {
+                // Get current instructor
+                const user = auth.currentUser;
+                if (!user) {
+                    throw new Error('User not authenticated');
+                }
+
+                // In a real app, we would update the specific payment item
+                // For demo, we'll just update the student's payment status
+                const studentRef = database.ref(`students/${studentId}`);
+                await studentRef.update({
+                    paymentStatus: status === 'paid' ? 'paid' : status,
+                    lastUpdatedBy: user.uid,
+                    lastUpdated: firebase.database.ServerValue.TIMESTAMP
+                });
+
+                // Close modal and refresh instructor dashboard
+                closePaymentValidationModal();
+
+                // Refresh the instructor dashboard to reflect changes
+                if (auth.currentUser) {
+                    await loadInstructorDashboardData(auth.currentUser.uid);
+                }
+
+                alert(status === 'paid' ? 'Pembayaran berhasil disetujui!' : 'Pembayaran berhasil ditolak!');
+            } catch (error) {
+                console.error('Error updating payment status:', error);
+                alert('Terjadi kesalahan saat memperbarui status pembayaran. Silakan coba lagi.');
+            }
+        }
+
+        // Event listener for file upload
+        document.getElementById('proofUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                document.getElementById('fileName').textContent = file.name;
+                document.getElementById('uploadedProofPreview').classList.remove('hidden');
+            }
+        });
+
+        // Function to remove uploaded proof
+        function removeProof() {
+            document.getElementById('proofUpload').value = '';
+            document.getElementById('uploadedProofPreview').classList.add('hidden');
+        }
+
+        // Close payment validation modal when clicking outside of it
+        document.getElementById('paymentValidationModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePaymentValidationModal();
+            }
+        });
+
+        // Handle session form submission
+        document.getElementById('sessionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const sessionTitle = document.getElementById('sessionTitle').value;
+            const sessionType = document.getElementById('sessionType').value;
+            const sessionDate = document.getElementById('sessionDate').value;
+            const sessionTime = document.getElementById('sessionTime').value;
+            const sessionDuration = parseInt(document.getElementById('sessionDuration').value);
+            const sessionDescription = document.getElementById('sessionDescription').value;
+
+            // Prepare session data based on type
+            let sessionData = {
+                title: sessionTitle,
+                type: sessionType,
+                date: sessionDate,
+                time: sessionTime,
+                duration: sessionDuration,
+                description: sessionDescription,
+                status: 'scheduled'
+            };
+
+            // Add type-specific fields
+            if (sessionType === 'offline') {
+                sessionData.location = document.getElementById('sessionLocation').value;
+            } else if (sessionType === 'online') {
+                sessionData.platform = document.getElementById('sessionPlatform').value;
+                sessionData.link = document.getElementById('sessionLink').value;
+                sessionData.password = document.getElementById('sessionPassword').value;
+            }
+
+            try {
+                // Save session to Firebase
+                await saveSessionToFirebase(sessionData);
+
+                // Show success message
+                alert('Jadwal sesi berhasil dibuat!');
+
+                // Close modal
+                closeScheduleSessionModal();
+
+                // Refresh instructor dashboard to show new session
+                if (typeof loadInstructorDashboardData !== 'undefined' && auth.currentUser) {
+                    await loadInstructorDashboardData(auth.currentUser.uid);
+                }
+            } catch (error) {
+                console.error('Error saving session:', error);
+                alert('Terjadi kesalahan saat membuat jadwal sesi. Silakan coba lagi.');
+            }
+        });
+
+        // Close modal when clicking outside of it
+        document.getElementById('scheduleSessionModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeScheduleSessionModal();
+            }
         });
 
         // Countdown Timer Functionality
@@ -792,6 +1957,511 @@
         document.getElementById('registrationModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 closeRegistrationForm();
+            }
+        });
+
+        // Initialize Firebase
+        // TODO: Replace with your actual Firebase project configuration
+        // Follow these steps to get your config:
+        // 1. Go to https://console.firebase.google.com/
+        // 2. Create a new project or select existing one
+        // 3. Add a web app to your project
+        // 4. Copy the config object from the setup instructions
+        const firebaseConfig = {
+            // Replace with your actual Firebase project configuration
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Initialize Firebase app
+        firebase.initializeApp(firebaseConfig);
+
+        // Initialize Firebase auth and database
+        const auth = firebase.auth();
+        const database = firebase.database();
+
+        /*
+         * IMPORTANT: To enable Google authentication, follow these steps in Firebase Console:
+         * 1. Go to Firebase Console -> Authentication -> Sign-in method
+         * 2. Enable "Google" sign-in provider
+         * 3. Add your domain to "Authorized domains" (e.g., "localhost" for local development)
+         * 4. Save the changes
+         *
+         * For Realtime Database:
+         * 1. Go to Firebase Console -> Realtime Database
+         * 2. Create a database (start in test mode for development)
+         * 3. Set up rules to allow read/write as needed
+         */
+
+        // Function to handle Google sign-in
+        async function signInWithGoogle() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+
+            try {
+                const result = await auth.signInWithPopup(provider);
+                const user = result.user;
+
+                // Update UI after successful login
+                updateUIAfterLogin(user);
+
+                // Optionally store user data in localStorage or send to your backend
+                localStorage.setItem('firebaseUser', JSON.stringify({
+                    uid: user.uid,
+                    displayName: user.displayName,
+                    email: user.email,
+                    photoURL: user.photoURL
+                }));
+
+                console.log('User signed in:', user);
+                return user;
+            } catch (error) {
+                console.error('Error during Google sign-in:', error);
+                alert('Terjadi kesalahan saat login dengan Google: ' + error.message);
+            }
+        }
+
+        // Function to handle sign out
+        async function signOut() {
+            try {
+                await auth.signOut();
+                // Update UI after logout
+                updateUIAfterLogout();
+                localStorage.removeItem('firebaseUser');
+                console.log('User signed out');
+            } catch (error) {
+                console.error('Error during sign out:', error);
+            }
+        }
+
+        // Function to update UI after login
+        function updateUIAfterLogin(user) {
+            // Hide the Google login button
+            const googleLoginButton = document.getElementById('google-login-btn');
+            if (googleLoginButton) {
+                googleLoginButton.style.display = 'none';
+            }
+
+            // Show user info and logout button
+            const userInfoDiv = document.getElementById('user-info');
+            if (userInfoDiv) {
+                userInfoDiv.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        ${user.photoURL ? `<img src="${user.photoURL}" alt="Profile" class="w-10 h-10 rounded-full">` : ''}
+                        <div>
+                            <p class="font-medium">${user.displayName || user.email}</p>
+                            <p class="text-sm text-slate-500">${user.email}</p>
+                        </div>
+                    </div>
+                    <button onclick="signOut()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+                        Logout
+                    </button>
+                `;
+                userInfoDiv.style.display = 'flex';
+                userInfoDiv.classList.add('justify-between', 'items-center');
+            }
+
+            // Pre-populate registration form fields if user is logged in
+            populateFormWithUserData({
+                displayName: user.displayName,
+                email: user.email
+            });
+        }
+
+        // Function to update UI after logout
+        function updateUIAfterLogout() {
+            // Show the Google login button again
+            const googleLoginButton = document.getElementById('google-login-btn');
+            if (googleLoginButton) {
+                googleLoginButton.style.display = 'block';
+            }
+
+            // Hide user info
+            const userInfoDiv = document.getElementById('user-info');
+            if (userInfoDiv) {
+                userInfoDiv.style.display = 'none';
+                userInfoDiv.innerHTML = '';
+            }
+
+            // Hide student dashboard and show main content
+            document.getElementById('studentDashboard').classList.add('hidden');
+            document.querySelectorAll('.hidden-on-login').forEach(el => {
+                el.classList.remove('hidden');
+            });
+        }
+
+        // Function to update UI after login
+        function updateUIAfterLogin(user) {
+            // Hide the Google login button
+            const googleLoginButton = document.getElementById('google-login-btn');
+            if (googleLoginButton) {
+                googleLoginButton.style.display = 'none';
+            }
+
+            // Show user info and logout button
+            const userInfoDiv = document.getElementById('user-info');
+            if (userInfoDiv) {
+                userInfoDiv.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        ${user.photoURL ? `<img src="${user.photoURL}" alt="Profile" class="w-10 h-10 rounded-full">` : ''}
+                        <div>
+                            <p class="font-medium">${user.displayName || user.email}</p>
+                            <p class="text-sm text-slate-500">${user.email}</p>
+                        </div>
+                    </div>
+                    <button onclick="signOut()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+                        Logout
+                    </button>
+                `;
+                userInfoDiv.style.display = 'flex';
+                userInfoDiv.classList.add('justify-between', 'items-center');
+            }
+
+            // Pre-populate registration form fields if user is logged in
+            populateFormWithUserData({
+                displayName: user.displayName,
+                email: user.email
+            });
+
+            // Check if user has completed registration (has name and phone)
+            checkUserRegistrationStatus(user.uid);
+        }
+
+        // Function to check if user has completed registration
+        async function checkUserRegistrationStatus(uid) {
+            try {
+                const userSnapshot = await database.ref('users/' + uid).once('value');
+                const userData = userSnapshot.val();
+
+                if (userData && userData.fullName && userData.phone) {
+                    // User has completed registration, show appropriate dashboard based on role
+                    showAppropriateDashboard(userData);
+                } else {
+                    // User needs to complete registration, show registration modal
+                    openRegistrationForm();
+                }
+            } catch (error) {
+                console.error('Error checking user registration status:', error);
+            }
+        }
+
+        // Function to show student dashboard
+        async function showStudentDashboard(userData) {
+            // Update dashboard with user data
+            document.getElementById('dashboardFullName').textContent = userData.fullName || userData.displayName || 'N/A';
+            document.getElementById('dashboardEmail').textContent = userData.email || 'N/A';
+            document.getElementById('dashboardPhone').textContent = userData.phone || 'N/A';
+
+            // Format join date
+            if (userData.createdAt) {
+                const date = new Date(userData.createdAt);
+                document.getElementById('joinDate').textContent = date.toLocaleDateString('id-ID');
+            }
+
+            // Load and display payment information
+            await loadStudentPaymentInfo(userData.uid, userData.fullName, userData.email);
+
+            // Show student dashboard and hide main content
+            document.getElementById('studentDashboard').classList.remove('hidden');
+            document.getElementById('instructorDashboard').classList.add('hidden');
+            document.querySelectorAll('.hidden-on-login').forEach(el => {
+                el.classList.add('hidden');
+            });
+        }
+
+        // Function to load and display student payment information
+        async function loadStudentPaymentInfo(studentId, studentName, studentEmail) {
+            try {
+                // Get payment plan for the student
+                const paymentPlan = await getStudentPaymentPlan(studentId);
+
+                if (!paymentPlan) {
+                    // Create a default payment plan if none exists
+                    await createPaymentPlan(studentId, studentName, studentEmail);
+                    // Re-fetch the newly created plan
+                    const newPlan = await getStudentPaymentPlan(studentId);
+                    updatePaymentDisplay(newPlan);
+                } else {
+                    updatePaymentDisplay(paymentPlan);
+                }
+            } catch (error) {
+                console.error('Error loading payment info:', error);
+                // Set default values if there's an error
+                document.getElementById('overallPaymentStatus').textContent = 'Error Memuat';
+                document.getElementById('dpStatus').className = 'px-2 py-1 text-xs rounded-full bg-red-900/30 text-red-400';
+                document.getElementById('dpStatus').textContent = 'Error';
+                document.getElementById('installmentStatus').className = 'px-2 py-1 text-xs rounded-full bg-red-900/30 text-red-400';
+                document.getElementById('installmentStatus').textContent = 'Error';
+            }
+        }
+
+        // Function to update payment display based on payment plan
+        function updatePaymentDisplay(paymentPlan) {
+            // Update down payment info
+            document.getElementById('dpDueDate').textContent = `Jatuh tempo: ${paymentPlan.downPayment.dueDate}`;
+
+            const dpStatusEl = document.getElementById('dpStatus');
+            const dpPayButton = document.getElementById('dpPayButton');
+
+            if (paymentPlan.downPayment.status === 'paid') {
+                dpStatusEl.className = 'px-2 py-1 text-xs rounded-full bg-green-900/30 text-green-400';
+                dpStatusEl.textContent = 'Lunas';
+                dpPayButton.classList.add('hidden');
+            } else {
+                dpStatusEl.className = 'px-2 py-1 text-xs rounded-full bg-yellow-900/30 text-yellow-400';
+                dpStatusEl.textContent = 'Pending';
+                dpPayButton.classList.remove('hidden');
+            }
+
+            // Update installments info
+            const paidInstallments = paymentPlan.installments.filter(inst => inst.status === 'paid').length;
+            const totalInstallments = paymentPlan.installments.length;
+            const pendingInstallments = totalInstallments - paidInstallments;
+
+            document.getElementById('installmentInfo').textContent = `Sisa: ${pendingInstallments}/${totalInstallments}`;
+
+            const installmentStatusEl = document.getElementById('installmentStatus');
+            const installmentPayButton = document.getElementById('installmentPayButton');
+
+            if (paidInstallments === totalInstallments) {
+                installmentStatusEl.className = 'px-2 py-1 text-xs rounded-full bg-green-900/30 text-green-400';
+                installmentStatusEl.textContent = 'Lunas';
+                installmentPayButton.classList.add('hidden');
+            } else if (paidInstallments > 0) {
+                installmentStatusEl.className = 'px-2 py-1 text-xs rounded-full bg-blue-900/30 text-blue-400';
+                installmentStatusEl.textContent = 'Sebagian';
+                installmentPayButton.classList.remove('hidden');
+            } else {
+                installmentStatusEl.className = 'px-2 py-1 text-xs rounded-full bg-yellow-900/30 text-yellow-400';
+                installmentStatusEl.textContent = 'Pending';
+                installmentPayButton.classList.remove('hidden');
+            }
+
+            // Calculate overall payment status
+            let overallStatus = 'Belum Dibayar';
+            let progressPercent = 0;
+
+            if (paymentPlan.downPayment.status === 'paid' && paidInstallments === totalInstallments) {
+                overallStatus = 'Lunas';
+                progressPercent = 100;
+            } else if (paymentPlan.downPayment.status === 'paid' || paidInstallments > 0) {
+                overallStatus = 'Sebagian Dibayar';
+                // Calculate progress: down payment (20%) + installments (80% total)
+                const installmentProgress = (paidInstallments / totalInstallments) * 80;
+                progressPercent = paymentPlan.downPayment.status === 'paid' ? 20 + installmentProgress : installmentProgress;
+            }
+
+            document.getElementById('overallPaymentStatus').textContent = overallStatus;
+            document.getElementById('paymentProgressBar').style.width = `${progressPercent}%`;
+
+            // Add event listeners to payment buttons
+            document.getElementById('dpPayButton').onclick = async () => {
+                // In a real app, this would redirect to payment gateway
+                // For demo, we'll just mark as paid
+                await recordPayment(studentId, 'down_payment', paymentPlan.downPayment.amount);
+                // Refresh the payment display
+                const updatedPlan = await getStudentPaymentPlan(studentId);
+                updatePaymentDisplay(updatedPlan);
+                alert('Pembayaran DP berhasil dicatat!');
+            };
+
+            document.getElementById('installmentPayButton').onclick = async () => {
+                // Find the next pending installment
+                const nextPendingInstallment = paymentPlan.installments.find(inst => inst.status === 'pending');
+                if (nextPendingInstallment) {
+                    // In a real app, this would redirect to payment gateway
+                    // For demo, we'll just mark the next installment as paid
+                    await recordPayment(studentId, nextPendingInstallment.id, nextPendingInstallment.amount);
+                    // Refresh the payment display
+                    const updatedPlan = await getStudentPaymentPlan(studentId);
+                    updatePaymentDisplay(updatedPlan);
+                    alert(`Pembayaran cicilan ${nextPendingInstallment.id} berhasil dicatat!`);
+                } else {
+                    alert('Tidak ada cicilan yang perlu dibayar');
+                }
+            };
+        }
+
+        // Function to show instructor dashboard
+        function showInstructorDashboard(userData) {
+            // Update instructor dashboard with user data
+            document.getElementById('instructorName').textContent = userData.fullName || userData.displayName || 'N/A';
+            document.getElementById('instructorEmail').textContent = userData.email || 'N/A';
+
+            // Load instructor dashboard data
+            loadInstructorDashboardData(userData.uid);
+
+            // Show instructor dashboard and hide main content
+            document.getElementById('instructorDashboard').classList.remove('hidden');
+            document.getElementById('studentDashboard').classList.add('hidden');
+            document.querySelectorAll('.hidden-on-login').forEach(el => {
+                el.classList.add('hidden');
+            });
+        }
+
+        // Function to load instructor dashboard data
+        async function loadInstructorDashboardData(instructorUid) {
+            try {
+                // Get all students
+                const studentsSnapshot = await database.ref('students').once('value');
+                const students = studentsSnapshot.val() || {};
+
+                // Update stats
+                document.getElementById('totalStudents').textContent = Object.keys(students).length;
+
+                // For demo purposes, showing some active students
+                document.getElementById('activeStudents').textContent = Object.keys(students).filter(uid => {
+                    // In a real app, you would check actual activity status
+                    return true;
+                }).length;
+
+                // Update live sessions count
+                document.getElementById('liveSessions').textContent = '3';
+
+                // Update completion rate
+                document.getElementById('completionRate').textContent = '65%';
+
+                // Populate students table
+                const studentsTableBody = document.getElementById('studentsTableBody');
+                studentsTableBody.innerHTML = '';
+
+                for (const [uid, studentData] of Object.entries(students)) {
+                    const row = document.createElement('tr');
+                    row.className = 'border-b border-slate-700 hover:bg-slate-750';
+
+                    // Calculate progress percentage (demo data)
+                    const progress = Math.floor(Math.random() * 100);
+
+                    // Get payment status for this student
+                    let paymentStatus = 'Belum Ada';
+                    let paymentStatusClass = 'bg-gray-900/30 text-gray-400';
+
+                    // In a real app, we would fetch the actual payment status
+                    // For demo, we'll use random statuses
+                    const statuses = ['Lunas', 'Sebagian', 'Pending'];
+                    const statusClasses = ['bg-green-900/30 text-green-400', 'bg-yellow-900/30 text-yellow-400', 'bg-red-900/30 text-red-400'];
+                    const randomIndex = Math.floor(Math.random() * statuses.length);
+                    paymentStatus = statuses[randomIndex];
+                    paymentStatusClass = statusClasses[randomIndex];
+
+                    row.innerHTML = `
+                        <td class="px-4 py-3 font-medium text-white">${studentData.fullName || 'N/A'}</td>
+                        <td class="px-4 py-3">${studentData.email || 'N/A'}</td>
+                        <td class="px-4 py-3">
+                            <span class="px-2 py-1 text-xs rounded-full bg-green-900/30 text-green-400">Aktif</span>
+                        </td>
+                        <td class="px-4 py-3">
+                            <div class="flex items-center">
+                                <div class="w-24 bg-slate-700 rounded-full h-2.5 mr-2">
+                                    <div class="bg-brand-600 h-2.5 rounded-full" style="width: ${progress}%"></div>
+                                </div>
+                                <span>${progress}%</span>
+                            </div>
+                        </td>
+                        <td class="px-4 py-3">
+                            <span class="px-2 py-1 text-xs rounded-full ${paymentStatusClass}">${paymentStatus}</span>
+                            <button onclick="openPaymentValidationModal('${uid}', '${studentData.fullName || 'N/A'}')" class="ml-2 text-xs text-blue-400 hover:text-blue-300">
+                                <i class="fa-solid fa-check"></i> Validasi
+                            </button>
+                        </td>
+                        <td class="px-4 py-3">
+                            <button class="text-blue-400 hover:text-blue-300 text-sm">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </td>
+                    `;
+
+                    studentsTableBody.appendChild(row);
+                }
+
+                // Load scheduled sessions
+                loadScheduledSessions(instructorUid);
+
+                // Populate recent activities
+                const recentActivity = document.getElementById('recentActivity');
+                recentActivity.innerHTML = `
+                    <div class="flex items-start gap-3">
+                        <div class="bg-blue-500/10 p-2 rounded-lg">
+                            <i class="fa-solid fa-user-plus text-blue-400"></i>
+                        </div>
+                        <div>
+                            <p class="text-slate-300">Ahmad S. mendaftar ke bootcamp</p>
+                            <p class="text-xs text-slate-500">2 jam yang lalu</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="bg-green-500/10 p-2 rounded-lg">
+                            <i class="fa-solid fa-graduation-cap text-green-400"></i>
+                        </div>
+                        <div>
+                            <p class="text-slate-300">Budi P. menyelesaikan modul Docker</p>
+                            <p class="text-xs text-slate-500">5 jam yang lalu</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="bg-purple-500/10 p-2 rounded-lg">
+                            <i class="fa-solid fa-comments text-purple-400"></i>
+                        </div>
+                        <div>
+                            <p class="text-slate-300">Diskusi baru di forum: "React Native Tips"</p>
+                            <p class="text-xs text-slate-500">1 hari yang lalu</p>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Error loading instructor dashboard data:', error);
+            }
+        }
+
+        // Function to determine user role and show appropriate dashboard
+        async function showAppropriateDashboard(userData) {
+            // Check if user is an instructor by looking at their role in the database
+            try {
+                const userSnapshot = await database.ref('users/' + userData.uid).once('value');
+                const dbUserData = userSnapshot.val();
+
+                if (dbUserData && dbUserData.role === 'instructor') {
+                    showInstructorDashboard(dbUserData);
+                } else {
+                    // Default to student role if not specified
+                    showStudentDashboard(dbUserData || userData);
+                }
+            } catch (error) {
+                console.error('Error determining user role:', error);
+                // Default to student dashboard if there's an error
+                showStudentDashboard(userData);
+            }
+        }
+
+        // Check if user is already logged in when page loads
+        window.addEventListener('load', async () => {
+            const savedUser = localStorage.getItem('firebaseUser');
+            if (savedUser) {
+                const user = JSON.parse(savedUser);
+                // Update UI to show logged in state
+                updateUIAfterLogin(user);
+
+                // Check if user has completed registration and show appropriate dashboard
+                if (auth.currentUser) {
+                    await checkUserRegistrationStatus(auth.currentUser.uid);
+                }
+            }
+        });
+
+        // Listen for auth state changes
+        auth.onAuthStateChanged(async user => {
+            if (user) {
+                // User is signed in
+                updateUIAfterLogin(user);
+
+                // Check if user has completed registration and show appropriate dashboard
+                await checkUserRegistrationStatus(user.uid);
+            } else {
+                // User is signed out
+                updateUIAfterLogout();
             }
         });
     </script>
