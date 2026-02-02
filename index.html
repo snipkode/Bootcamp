@@ -402,31 +402,47 @@
 
     <!-- Registration Form Modal -->
     <div id="registrationModal" class="fixed inset-0 bg-black bg-opacity-70 hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-slate-800 rounded-2xl max-w-md w-full p-6 border border-slate-700 relative">
-            <button onclick="closeRegistrationForm()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+        <div class="bg-white rounded-2xl max-w-md w-full p-8 border border-brand-500 relative shadow-2xl">
+            <button onclick="closeRegistrationForm()" class="absolute top-4 right-4 text-slate-400 hover:text-brand-600">
                 <i class="fas fa-times text-xl"></i>
             </button>
 
-            <h3 class="text-2xl font-bold text-center mb-6 text-white">Form Pendaftaran</h3>
+            <h3 class="text-2xl font-bold text-center mb-2 text-brand-700">Form Pendaftaran</h3>
+
+            <div class="text-center mb-6">
+                <p class="text-slate-600 text-sm">Bootcamp Fullstack Mobile Development</p>
+            </div>
+
+            <!-- Payment Info Box -->
+            <div class="bg-brand-50 border border-brand-200 rounded-xl p-4 mb-6 text-center">
+                <h4 class="font-bold text-brand-700 mb-2 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-tag text-brand-600"></i> Biaya Investasi
+                </h4>
+                <div class="space-y-2">
+                    <p class="text-lg font-bold text-brand-800">Rp 5.000.000</p>
+                    <p class="text-sm text-slate-600">Dapat dicicil dengan DP 20%</p>
+                    <p class="text-xs text-slate-500">Sisanya Rp 1.000.000/bulan</p>
+                </div>
+            </div>
 
             <form id="registrationForm">
                 <div class="mb-4">
-                    <label for="fullName" class="block text-slate-300 mb-2">Nama Lengkap</label>
+                    <label for="fullName" class="block text-slate-700 mb-2 font-medium">Nama Lengkap</label>
                     <input
                         type="text"
                         id="fullName"
-                        class="w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white focus:ring-2 focus:ring-brand-500 focus:outline-none transition"
+                        class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3 text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none transition"
                         placeholder="Masukkan nama lengkap Anda"
                         required
                     >
                 </div>
 
                 <div class="mb-6">
-                    <label for="email" class="block text-slate-300 mb-2">Email</label>
+                    <label for="email" class="block text-slate-700 mb-2 font-medium">Email</label>
                     <input
                         type="email"
                         id="email"
-                        class="w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white focus:ring-2 focus:ring-brand-500 focus:outline-none transition"
+                        class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3 text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none transition"
                         placeholder="Masukkan email Anda"
                         required
                     >
@@ -434,10 +450,14 @@
 
                 <button
                     type="submit"
-                    class="w-full py-3 bg-green-600 hover:bg-green-500 text-white font-bold rounded-lg shadow-lg shadow-green-900/40 transition"
+                    class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-lg shadow-lg shadow-brand-500/30 transition"
                 >
-                    Kirim ke WhatsApp
+                    <i class="fa-brands fa-whatsapp mr-2"></i> Kirim ke WhatsApp
                 </button>
+
+                <p class="text-center text-xs text-slate-500 mt-3">
+                    Data Anda akan kami jaga kerahasiaannya
+                </p>
             </form>
         </div>
     </div>
